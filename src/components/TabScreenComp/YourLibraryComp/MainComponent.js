@@ -11,8 +11,8 @@ export const MainCreateComponent = ({ PlaylistName, image, Owner }) => {
         />
       </View>
       <View style={styles.txtContainer}>
-        <Text style={styles.toptxt}> {PlaylistName} </Text>
-        <Text style={styles.sndtxt}>Playlist . {Owner}</Text>
+        <Text style={styles.toptxt}> {PlaylistName.length > 20 ? PlaylistName.slice(0, 20) + ' ..' : PlaylistName} </Text>
+        <Text style={styles.sndtxt}>Playlist . {Owner.length > 20 ? Owner.slice(0, 20) : Owner}</Text>
       </View>
     </View>
   )
@@ -26,7 +26,7 @@ const MainRenderComponent = () => {
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQB98slfH1Vmlvd-5KAC0mmpi6u74_UJy39Fs9eay4I3-nacnAAcF7X2qaiVFImrAbu_D3Mc_KwoethrmEYDVUjFw8arVGg2JSiMg_mFVqTuy3KeexGPhE16HLIIXiH0XW7zkIt-XJDqGa4gyrM-E-OzhK7hHA_3hFidU1DMSav9q9Aiaz4q_UU_meCb-AyyLyc7P-5RldKsu_ivckZx1USiwrg5mXDOzt60lPvSrwJvFHm1Yvd79aL2Jes9DX5NvcwJFTHfXgRVXQ' },
+          { 'Authorization': 'Bearer ' + 'BQD6bPvf1YT0D4c54-eT2D7qfh4DGdd6c-kZ1zo36fStPrMEecW3pv2sHFuNyEzcmZ3PyNDySIU3AK_rA7C4E3P7_NBJpgIJxYe9rQdIQ9Y30ukqb-OvRErNepEYpCXlR6BYD85JaXezlGadIgqyZuSCIdcETUOXxmn3QBcLoGUM97-5TTWrz7AoRwd6KohBbKA7DuVgMXxRCliro3eT52xJBco5vj3VhvWDOzlv8MZaJ0RgyqgZAPbbnYVgDMvBvpOLrACNdGnkIQ' },
         json: true
       })
       const result = await res.json();
