@@ -50,7 +50,6 @@ const SwipableRenderComponent = () => {
                             <SwipableComponent text='Podcasts & Shows' type='Primary' onPress={() => { console.warn('Podcast pressed') }} />
                             <SwipableComponent text='Albums' onPress={() => { console.warn('Album pressed') }} />
                             <SwipableComponent text='Artists' onPress={() => { console.warn('Artist pressed') }} />
-
                         </View>
 
                     )
