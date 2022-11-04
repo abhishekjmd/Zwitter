@@ -7,10 +7,10 @@ const Tab = createBottomTabNavigator();
 
 
 // --------------- IMPORTING SCREEN -----------------
-import HomeStackNavigation from '../StackNavigation/HomeStackNavigation'
-import SearchScreen from '../../screens/TabScreens/SeaarchScreen/SearchScreen';
-import YourLibrary from '../../screens/TabScreens/Your Library/YourLibrary';
-import Premium from '../../screens/TabScreens/Premium/Premium';
+import HomeStackNavigation from '../StackNavigation/HomeStackNavigation/HomeStackNavigation'
+import SearchScreen from '../../screens/SeaarchScreen/SearchScreen';
+import YourLibrary from '../StackNavigation/YourLibraryNavigation/Index';
+import Premium from '../../screens/Premium/Premium';
 
 // --------------- IMPORTING TABICONS -----------------
 import Entypo from 'react-native-vector-icons/Entypo'

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Index from '../../../components/HomescreenComp/Index'
+import HomescreenComp from '../../components/HomescreenComp/Index'
 const HomeScreen = () => {
   return (
     <View style={styles.root}>
-      <Index />
+      <HomescreenComp />
     </View>
   )
 }
