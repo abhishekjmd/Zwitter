@@ -1,12 +1,8 @@
 import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
-export const MainCreateComponent = ({ PlaylistName, image, Owner }) => {
-  const navigation = useNavigation();
-  const OnPlaylistPressed = () => {
-    navigation.navigate('MusicList')
-  }
+export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPressed }) => {
   return (
     <Pressable style={styles.root} onPress={OnPlaylistPressed}>
       <View style={styles.imgContainer}>
@@ -25,13 +21,14 @@ export const MainCreateComponent = ({ PlaylistName, image, Owner }) => {
 
 const MainRenderComponent = () => {
   const [response, setResponse] = useState('')
+  const navigation = useNavigation();
   const spotifyPlaylists = async () => {
     const endpointUrl = "https://api.spotify.com/v1/me/playlists";
 
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQA1DJR_pXefTl_Ti1T1yDx-0j4Csr-lxzjd3lPMeKBVPfbOoSfJzTDiG95RPLuQiJjRSGHePWEV0tFwL83CuKRFzBr8Lw5mOV2aYobHBxQifpy3NnLHTB-_-B5EpZlcSadZn7-bUlq1IyWBbpU0DoOFVt2q_c5agZ8d5Io1arR_BoKx2sbQ5g5uvWW8qbB_E6cFyWfCoBUt18yenKTkQelL9-EClvZ-K7OQpaQmv8naM7i3gUxvUicS_Dpq6oVmmr73SxSyQGpeIw' },
+          { 'Authorization': 'Bearer ' + 'BQCdTKy4v8KZ292q0eIJn6xaoce4YB2K71Ic2ORMa2FMB4OnUIBCOOOjnNi8XCGZrVDGzErpqZDwCMNr0e4hCBr7oSeeOl9l0dAR0v8RhiQjjcBnrbklubPARsH4zJhzgDIvDnwjNQRtRuUta5S0Zknh-SNEzIJfqvg3g9ZQIGNqZKWHWBWblRfL8BMcnyUCg3nKH710O0oOMfv_3Kldq6cwUXmZPjXt_0wKvnh2KG_Ej6grpIBh-9Ph2aGSinTOWwG8ksKES6D4Fg' },
         json: true
       })
       const result = await res.json();
@@ -55,6 +52,10 @@ const MainRenderComponent = () => {
                 PlaylistName={item.name}
                 Owner={item.owner.display_name}
                 image={item.images[0].url}
+                OnPlaylistPressed={() => {
+                  console.warn(item.id)
+                  navigation.navigate('MusicList', { TracksId: item.id, Owner: item.owner.display_name, Images: item.images[0].url, PlaylistName: item.name, OwnerImage: item.owner.uri  })
+                }}
               />
             </View>
           )

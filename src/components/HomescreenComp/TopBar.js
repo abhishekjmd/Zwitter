@@ -12,7 +12,7 @@ const TopBar = () => {
             </View>
 
             <View style={styles.subIconContainer}>
-                <Octicons name='bell' size={20} style={styles.icon} />
+                <Octicons name='bell' size={20} style={styles.icon}  />
                 <Octicons name='clock' size={20} style={styles.icon} />
                 <Feather name='settings' size={20} style={styles.icon} />
             </View>
