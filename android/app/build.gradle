@@ -255,6 +255,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // compile project(':react-native-sound')
     //noinspection GradleDynamicVersion
+    implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-vector-icons')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"

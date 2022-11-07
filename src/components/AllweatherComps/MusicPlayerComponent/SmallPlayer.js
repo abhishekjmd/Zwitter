@@ -1,39 +1,36 @@
 import { StyleSheet, Text, View, Image, Modal } from 'react-native'
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Fontisto from 'react-native-vector-icons/Fontisto'
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-const SmallPlayer = () => {
-    const [modalVisible, setModalVisible] = useState(false);
+const SmallPlayer = ({ pause, OnPlay, OnPause, MusicImg }) => {
     return (
-        <View>
-            <Modal 
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.root}>
-                    <View style={styles.MainContainer}>
-                        <View style={styles.ImageContainer}>
-                            <Image source={require('../../../../MusicPlayer.jpeg')} style={styles.Image} />
-                        </View>
-                        <View style={styles.TextContainer}>
-                            <Text style={styles.FirstText}>Main Agar Kahoon</Text>
-                            <Text style={styles.SecondText}>Sonu Nigam</Text>
-                        </View>
-                    </View>
-                    <View style={styles.IconContainer}>
-                        <MaterialCommunityIcons name='cast-audio' size={25} color='#e9ebf0' />
-                        <AntDesign name='heart' size={25} color='green' />
-                        <FontAwesome5 name='play' size={20} color='white' />
-                    </View>
+
+
+        <View style={styles.root}>
+            <View style={styles.MainContainer}>
+                <View style={styles.ImageContainer}>
+                    <Image source={{ uri: MusicImg }} style={styles.Image} />
                 </View>
-            </Modal>
+                <View style={styles.TextContainer}>
+                    <Text style={styles.FirstText}>Main Agar Kahoon</Text>
+                    <Text style={styles.SecondText}>Sonu Nigam</Text>
+                </View>
+            </View>
+            <View style={styles.IconContainer}>
+                <MaterialCommunityIcons name='cast-audio' size={25} color='#e9ebf0' />
+                <AntDesign name='heart' size={25} color='green' />
+                {pause ?
+                    <FontAwesome5 name='play' size={20} color='white' onPress={OnPlay} />
+                    :
+                    <Fontisto name='pause' size={20} color='white' onPress={OnPause} />
+                }
+            </View>
         </View>
+
+
     )
 }
 
@@ -44,16 +41,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#87888a',
         flexDirection: 'row',
         borderRadius: 5,
-        marginLeft: 7,
-        width: '98%',
-        height: 60,
+        width: '100%',
+        height: '10%',
+        marginBottom: '1%'
     },
     MainContainer: {
-        flexDirection: 'row',
         alignItems: 'center',
+        flexDirection: 'row',
+        margin: '1.5%',
         height: '80%',
         width: '60%',
-        margin: 6,
     },
     ImageContainer: {
         height: '100%',
@@ -64,9 +61,9 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     TextContainer: {
-        marginLeft: 8,
+        justifyContent: 'center',
+        marginLeft: '3%',
         height: '100%',
-        justifyContent: 'center'
     },
     FirstText: {
         fontWeight: '600',
@@ -82,6 +79,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '80%',
         width: '34%',
-        margin: 6,
+        margin: '1%',
     },
 })

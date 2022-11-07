@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image,Pressable } from 'react-native'
+import React,{useState} from 'react'
+import SmallPlayer from '../../AllweatherComps/MusicPlayerComponent/SmallPlayer'
 
-const MusicList = ({ SongName, Artists,Images }) => {
-
+const MusicList = ({ SongName, Artists, Images, OnMusicPressed }) => {
+  
   return (
-    <View style={styles.root}>
+    <Pressable style={styles.root} onPress={OnMusicPressed}>
       <View style={styles.MainContainer}>
         <View style={styles.ImageContainer}>
           <Image source={{uri:Images}} style={styles.Image} />
@@ -21,7 +22,7 @@ const MusicList = ({ SongName, Artists,Images }) => {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   )
 }
 

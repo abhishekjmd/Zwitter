@@ -9,12 +9,10 @@ import MusicList from '../../../components/YourLibraryComp/MusicListComponent/In
 const Navigation = () => {
 
     return (
-        <Stack.Navigator 
-        screenOptions={{ 
-            // headerShown: false
-            title:false
-         }}
-        
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
         >
             <Stack.Screen name='MainLibrary' component={MainLibraryScreen} />
             <Stack.Screen name='MusicList' component={MusicList} />

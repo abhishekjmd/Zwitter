@@ -2,7 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { authorize } from 'react-native-app-auth';
 import TabNavigation from './src/navigation/TabNavigation/Index'
+import SmallPlayer from './src/components/AllweatherComps/MusicPlayerComponent/SmallPlayer';
 // import Index from './src/components/TabScreenComp/YourLibraryComp/Index';
+
 const authConfig = {
   // clientId: 'facd2be1aa6c4a9c99089141bed15e30',
   clientId: 'e16476e0d6be41a1b90668c7176ffe36',
@@ -37,7 +39,7 @@ const App = () => {
   }
   return (
     <View style={styles.root}>
-       <TabNavigation /> 
+      <TabNavigation /> 
     </View>
   )
 }
@@ -46,6 +48,7 @@ export default App;
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
+    // backgroundColor:'black'
   }
 })

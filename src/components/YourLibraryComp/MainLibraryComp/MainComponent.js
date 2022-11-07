@@ -28,7 +28,7 @@ const MainRenderComponent = () => {
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQCdTKy4v8KZ292q0eIJn6xaoce4YB2K71Ic2ORMa2FMB4OnUIBCOOOjnNi8XCGZrVDGzErpqZDwCMNr0e4hCBr7oSeeOl9l0dAR0v8RhiQjjcBnrbklubPARsH4zJhzgDIvDnwjNQRtRuUta5S0Zknh-SNEzIJfqvg3g9ZQIGNqZKWHWBWblRfL8BMcnyUCg3nKH710O0oOMfv_3Kldq6cwUXmZPjXt_0wKvnh2KG_Ej6grpIBh-9Ph2aGSinTOWwG8ksKES6D4Fg' },
+          { 'Authorization': 'Bearer ' + 'BQA-wz0lUJSvgyYxz3h18To6fdkUlG2hR45IortJAjNTZcg62BL2jc2Sojdg0SR6OZOzhlHkaIPedQhEi28UioeeJVm6dBs7eDPluSb_YZatebMMVHAqZ4Ad-MD47yv75k1lGvSpR0rApEmOYPj_ull0pwuw3g_1UCKxzjZHoEw7P62PElqHxWV_GY-FHJibc9ftXtUF8vpKMCfz0ymcJqpD0zsCWGTMl39Ow3zU9zOBfQBk_QP2EMVwsI6yagGgpsPzff-6dPI8HA' },
         json: true
       })
       const result = await res.json();
