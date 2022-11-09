@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 
 // --------------- IMPORTING SCREEN -----------------
 import HomeStackNavigation from '../StackNavigation/HomeStackNavigation/HomeStackNavigation'
-import SearchScreen from '../../screens/SearchScreen/SearchScreen';
+import SearchScreen from '../StackNavigation/SearchNavigation/Index';
 import YourLibrary from '../StackNavigation/YourLibraryNavigation/Index';
 import Premium from '../../screens/Premium/Premium';
 

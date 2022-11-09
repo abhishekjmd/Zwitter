@@ -41,7 +41,7 @@ const App = () => {
   }
   return (
     <View style={styles.root}>
-      <Search /> 
+      <TabNavigation /> 
     </View>
   )
 }
