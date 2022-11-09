@@ -2,10 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { authorize } from 'react-native-app-auth';
 import TabNavigation from './src/navigation/TabNavigation/Index'
-import SmallPlayer from './src/components/AllweatherComps/MusicPlayerComponent/SmallPlayer';
-import Search from './src/components/SearchScreenComp/Index'
-import BrowseComponent from './src/components/SearchScreenComp/BrowseCategoryComp/BrowseComponent';
-// import Index from './src/components/TabScreenComp/YourLibraryComp/Index';
+import MainSearchScreen from './src/screens/SearchScreen/MainSearchScreen/MainSearchScreen';
 
 const authConfig = {
   // clientId: 'facd2be1aa6c4a9c99089141bed15e30',
@@ -41,7 +38,7 @@ const App = () => {
   }
   return (
     <View style={styles.root}>
-      <TabNavigation /> 
+      <MainSearchScreen /> 
     </View>
   )
 }
@@ -51,6 +48,5 @@ export default App;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // backgroundColor:'black'
   }
 })

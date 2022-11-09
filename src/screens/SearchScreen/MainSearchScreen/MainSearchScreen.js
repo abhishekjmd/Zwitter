@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
+import MainSearchScreenComp from '../../../components/SearchScreenComp/MainSearchScreenComp/MainSearchScreenComp'
 const MainSearchScreen = () => {
   return (
     <View>
-      <Text>MainSearchScreen</Text>
+      <MainSearchScreenComp />
     </View>
   )
 }
