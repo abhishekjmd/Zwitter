@@ -3,6 +3,8 @@ import React from 'react'
 import { authorize } from 'react-native-app-auth';
 import TabNavigation from './src/navigation/TabNavigation/Index'
 import SmallPlayer from './src/components/AllweatherComps/MusicPlayerComponent/SmallPlayer';
+import Search from './src/components/SearchScreenComp/Index'
+import BrowseComponent from './src/components/SearchScreenComp/BrowseCategoryComp/BrowseComponent';
 // import Index from './src/components/TabScreenComp/YourLibraryComp/Index';
 
 const authConfig = {
@@ -39,7 +41,7 @@ const App = () => {
   }
   return (
     <View style={styles.root}>
-      <TabNavigation /> 
+      <Search /> 
     </View>
   )
 }

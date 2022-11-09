@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPressed }) => {
   return (
@@ -28,7 +28,7 @@ const MainRenderComponent = () => {
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQA-wz0lUJSvgyYxz3h18To6fdkUlG2hR45IortJAjNTZcg62BL2jc2Sojdg0SR6OZOzhlHkaIPedQhEi28UioeeJVm6dBs7eDPluSb_YZatebMMVHAqZ4Ad-MD47yv75k1lGvSpR0rApEmOYPj_ull0pwuw3g_1UCKxzjZHoEw7P62PElqHxWV_GY-FHJibc9ftXtUF8vpKMCfz0ymcJqpD0zsCWGTMl39Ow3zU9zOBfQBk_QP2EMVwsI6yagGgpsPzff-6dPI8HA' },
+          { 'Authorization': 'Bearer ' + 'BQBSYlH4EBapSaCrN05u1OAs75tJguz2uYO15u27r5OMofJqpEQ_S-TGZZ58sUHGAl6LRNEAbX190dLkk07sn5RAo12guiZMyTAVuJ2xBGqCghbegHO_wW3hPyuCr_DOkGxqXTm7F6RHqz6BShVDbqnObvHJheqYH_0n1ijgj5u6pHqNc9iulMkArlKMiwGhKkBLdaUe_bIjdk8Vbu7afe1X_0_2CNcfyyBJ-vxwQBqHH6UjZnvgsUsQcAz7aeOwLjNJUf0syoqvpg' },
         json: true
       })
       const result = await res.json();

@@ -1,15 +1,19 @@
-import { StyleSheet, View, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import TopComponent from './TopComponents'
-import MusicList from './MusicList'
+import { StyleSheet, View, FlatList } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import SmallPlayer from '../../AllweatherComps/MusicPlayerComponent/SmallPlayer'
 import Video from 'react-native-video'
 
+// ---------------- IMPORTED COMPONENTS ----------
+import TopComponent from './TopComponents'
+import MusicList from './MusicList'
+import SmallPlayer from '../../AllweatherComps/MusicPlayerComponent/SmallPlayer'
+
 const Index = () => {
+
   const route = useRoute();
+  const [durations, setDuration] = useState(0)
   const [musicImg, setMusicImg] = useState('')
-  const [musicUrl,setMusicUrl] = useState('')
+  const [musicUrl, setMusicUrl] = useState('')
   const [albumData, setAlbumData] = useState('')
   const [shouldShow, setShouldShow] = useState(false);
   const dataId = route.params.TracksId;
@@ -21,6 +25,7 @@ const Index = () => {
   const OnPlay = () => {
     setPause(false)
   }
+  
   const OnPause = () => {
     setPause(true)
   }
@@ -29,7 +34,7 @@ const Index = () => {
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQA-wz0lUJSvgyYxz3h18To6fdkUlG2hR45IortJAjNTZcg62BL2jc2Sojdg0SR6OZOzhlHkaIPedQhEi28UioeeJVm6dBs7eDPluSb_YZatebMMVHAqZ4Ad-MD47yv75k1lGvSpR0rApEmOYPj_ull0pwuw3g_1UCKxzjZHoEw7P62PElqHxWV_GY-FHJibc9ftXtUF8vpKMCfz0ymcJqpD0zsCWGTMl39Ow3zU9zOBfQBk_QP2EMVwsI6yagGgpsPzff-6dPI8HA' },
+          { 'Authorization': 'Bearer ' + 'BQBSYlH4EBapSaCrN05u1OAs75tJguz2uYO15u27r5OMofJqpEQ_S-TGZZ58sUHGAl6LRNEAbX190dLkk07sn5RAo12guiZMyTAVuJ2xBGqCghbegHO_wW3hPyuCr_DOkGxqXTm7F6RHqz6BShVDbqnObvHJheqYH_0n1ijgj5u6pHqNc9iulMkArlKMiwGhKkBLdaUe_bIjdk8Vbu7afe1X_0_2CNcfyyBJ-vxwQBqHH6UjZnvgsUsQcAz7aeOwLjNJUf0syoqvpg' },
         json: true
       })
       const result = await res.json();
@@ -55,10 +60,11 @@ const Index = () => {
                 SongName={item.track.name}
                 Artists={item.track.artists[0].name}
                 OnMusicPressed={() => {
-                  console.log(item.track.preview_url);
                   setShouldShow(true)
                   setMusicImg(item.track.album.images[0].url);
-                  setMusicUrl(item.track.preview_url) 
+                  setMusicUrl(item.track.preview_url)
+                  setDuration(item.track.duration_ms)
+                  // console.log(setDuration);
                 }}
               />
             </View>
@@ -68,12 +74,23 @@ const Index = () => {
       {
         shouldShow ?
           (
-            <SmallPlayer {...{ pause, OnPlay, OnPause }} MusicImg={musicImg}
-            />
+            <>
+              <SmallPlayer {...{ pause, OnPlay, OnPause }} MusicImg={musicImg} />
+              <Video
+                source={{ uri: musicUrl }}
+                poster={musicImg}
+                audioOnly
+                paused={pause}
+                onProgress={{
+
+                }}
+
+              />
+            </>
           )
           : null
       }
-      <Video source={{uri:musicUrl}} audioOnly paused={pause}/>
+
     </View>
   )
 }
