@@ -28,7 +28,7 @@ const FirstTopComponent = () => {
 
 // --------------- TOP SECOND MOST COMPONENT--------- 
 
-const SwipableComponent = ({ text, type, onPress }) => {
+export const SwipableComponent = ({ text, type, onPress }) => {
     return (
         <View style={Styles.root}>
             <TouchableOpacity style={[Styles.container, Styles[`container_${type}`]]} onPress={onPress}>
@@ -37,7 +37,7 @@ const SwipableComponent = ({ text, type, onPress }) => {
         </View>
     )
 }
-const SwipableRenderComponent = () => {
+export const SwipableRenderComponent = () => {
     return (
         <View>
             <FlatList
@@ -85,7 +85,7 @@ const Styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 10,
         marginRight: 5,
-        borderWidth: 1,
+        borderWidth: 1.5,
         width: 120,
         height: 40,
 

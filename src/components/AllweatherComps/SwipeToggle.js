@@ -23,10 +23,20 @@ const styles = StyleSheet.create({
         // justifyContent:'center',
         // alignItems:'center',
     },
+    container_Primary:{
+        width:100,
+        height:40,
+        backgroundColor:'red',
+    },
     text: {
         color: 'white',
         textTransform: 'capitalize',
         // backgroundColor:'blue'
+    },
+    text_Primary:{
+        textTransform: 'capitalize',
+        fontSize:17,
+
     },
     
 })

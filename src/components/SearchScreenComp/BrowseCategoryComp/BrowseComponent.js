@@ -18,7 +18,7 @@ const BrowseComponent = () => {
         const endpointUrl = 'https://api.spotify.com/v1/browse/categories?limit=50';
         const res = await fetch(endpointUrl, {
             headers:
-                { 'Authorization': 'Bearer ' + 'BQDgMLz3cwMuPHpiwv2kgaK6sWjfZFfoOQs39R6ngV29XKysaNUBSLRqQqfHfLX-Tu8SyulwA6FCKyhcpSGfhJVN0f5u3Z57bU-eQxkQtvnaaRLynpaFhRge19ilOYVcAQ400CLL0hIN6w6yJi5GodStFHNrUuMggQgJxnpEqtynnXAfQRrzDkAsbTxYfucoMwGSOXeCFod5pq313Q_e75jZu80sn0_ilB_Xfu8td-Jw4h6Na4YmYri3IjzHneRUmIl8tHqmYwFf1A' },
+                { 'Authorization': 'Bearer ' + 'BQBBqe6Jl4JNU0ZezBwMobz36sXmLgFsvJ1eTW4TGsDztTB87GpeGWrYMgsSx_YvEfpNBaebFTjVHAu3rAB46KhWyL319wpmGdWhOcK_kzIFa73vsfVF4Kg1Ep0MPREI_GzHEvUOfcMI1oBZW9qjfeoAPsaW805jWOkiRgLHZ91q4i2ZXD4wJEhMoOsNuJX443-lnS-8cNNIHSnFvNJQSbbRKHHtyrB-whyPm4RJJyKvwQbczzv_ntTTSgscWJfnlVzkXqDqENrP6Q' },
             json: true
         })
         const result = await res.json();

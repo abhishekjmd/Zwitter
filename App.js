@@ -3,6 +3,7 @@ import React from 'react'
 import { authorize } from 'react-native-app-auth';
 import TabNavigation from './src/navigation/TabNavigation/Index'
 import MainSearchScreen from './src/screens/SearchScreen/MainSearchScreen/MainSearchScreen';
+import SwipeComp from './src/components/SearchScreenComp/MainSearchScreenComp/SwipeComp';
 
 const authConfig = {
   // clientId: 'facd2be1aa6c4a9c99089141bed15e30',
