@@ -43,29 +43,41 @@ const SearchResultComp = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) 
 
 
 const MainSearchScreenComp = () => {
+
+    //  --------------- STATES -------------------
     const [response, setResponse] = useState('');
-    const [err, setErr] = useState('');
     const [value, setValue] = useState('')
-    const [term, setTerm] = useState('');
     const [type, setType] = useState('')
+
+    //-------------- ONPRESS FUNCTIONS ---------------
+    const OnSongsPressed = () => { setType('track'); }
+    const OnPlaylistsPressed = () => { setType('playlist'); }
+    const OnAlbumsPressed = () => { setType('album'); }
+    const OnArtistPressed = () => { setType('artist'); }
+    const OnPodcastShowsPressed = () => { setType('show'); }
+    const OnProfilesPressed = () => { setType('album'); }
+    const OnGenreMoodsPrssed = () => { setType('album'); }
+    //------------- APICALL FUNCTION ----------------
     const SearchApiCall = async () => {
-        const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=track&market=IN`;
+        const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=${type}&market=IN`;
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQACKpT30tDlqyZd1kwzwI93SYOWx6ZZ9VFI5ELMR2ujAexGwPl2BwMWJnpY7zhm-vg6NEF6Yvml1RIatmUFzmibdK3355fUM7x6am3vhylysET3E5CQqxgMuiZSuCXz5Dile7KSAQk3gWzYDnFj6kUVDTxlEH8SVFtN5cxk2EUHA0UQNxVDFl1Fv4YGIpFatC387GPu_UQrfmIF3yr9MLVgF6H0Z79mVw52pWDdrYAUmwY1ZCBSchoRahoh0pleqMrCBQnU3Q_fEQ' },
+                    { 'Authorization': 'Bearer ' + 'BQBNPWq9RNo8kVihpPMJUP4IfBZ2Cxu-MNi5xMHbaHbR5YGyId3JnugnGcK_KKSPtsKpXtUaLrzMGZPE5yDcJn8Be9ydFAk8RkaQ2SggExANch4cfhThztwxU7cInR4--3A39H3CfEo4Ufw4C2NiGTrP3As92DJYXN0G-Vdvnz1vOUPyXNSXMlD4kLP4tMZGGMqY0jtfmToY7blxBK9ECWZ52ACjK4C8hiY9T7YDn2-ddLBktw7zC0YlTPAh2s7LOarcXrL1JG1M7g' },
                 json: true
             })
             const result = await res.json();
-            const finalResult = await result.tracks.items;
-            if (finalResult.length > 0) {
-                setResponse(result.tracks);
-                console.log(result);
+            console.log(result);
+            // const finalResult = await result+{type};
+            // console.log(finalResult.albums);
+            // if (finalResult.length > 0) {
+            // setResponse(result.);
+            // console.log(`result${type}`);
 
-            } else {
-                setResponse('');
+            // } else {
+            // setResponse('');
 
-            }
+            // }
         } catch (error) {
             console.log(error)
 
@@ -73,7 +85,6 @@ const MainSearchScreenComp = () => {
     }
     useEffect(() => {
         SearchApiCall(value);
-        // console.warn();
     }, [value])
     return (
         <View>
@@ -83,12 +94,12 @@ const MainSearchScreenComp = () => {
                 onEndEditing={(e) => { setValue(e) }}
             />
 
-            <SwipeComp />
+            <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
             <FlatList
                 data={response.items}
                 renderItem={({ item }) => {
                     return (
-                        <SearchResultComp trackName={item.name} Artist={item.artists[0].name } ArtistTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} image={item.album.images[0].url} />
+                        <SearchResultComp trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} image={item.album.images[0].url} />
                     )
                 }}
             />

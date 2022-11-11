@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, FlatList,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import { SwipableComponent } from '../../YourLibraryComp/MainLibraryComp/TopComponent'
 
-const SwipeComp = () => {
+const SwipeComp = ({ TopPressed, SongsPressed, AlbumsPressed, PlaylistsPressed, ArtistsPressed, PodcastsShowsPressed, ProfilesPressed, GenresMoodsPressed }) => {
     return (
         <View>
             <FlatList
@@ -11,14 +11,14 @@ const SwipeComp = () => {
                 renderItem={() => {
                     return (
                         <View style={{ flexDirection: 'row' }}>
-                            <SwipableComponent text='Top' onPress={() => { console.warn('Playlist pressed') }} />
-                            <SwipableComponent text='Songs' onPress={() => { console.warn('Artist pressed') }} />
-                            <SwipableComponent text='Albums' onPress={() => { console.warn('Album pressed') }} />
-                            <SwipableComponent text='Playlists' onPress={() => { console.warn('Artist pressed') }} />
-                            <SwipableComponent text='Artists' onPress={() => { console.warn('Artist pressed') }} />
-                            <SwipableComponent text='Podcasts & Shows' type='Primary' onPress={() => { console.warn('Podcast pressed') }} />
-                            <SwipableComponent text='Profiles' onPress={() => { console.warn('Artist pressed') }} />
-                            <SwipableComponent text='Genres & Moods' type='Primary' onPress={() => { console.warn('Artist pressed') }} />
+                            <SwipableComponent text='Top' onPress={TopPressed} />
+                            <SwipableComponent text='Songs' onPress={SongsPressed} />
+                            <SwipableComponent text='Albums' onPress={AlbumsPressed} />
+                            <SwipableComponent text='Playlists' onPress={PlaylistsPressed} />
+                            <SwipableComponent text='Artists' onPress={ArtistsPressed} />
+                            <SwipableComponent text='Podcasts & Shows' type='Primary' onPress={PodcastsShowsPressed} />
+                            <SwipableComponent text='Profiles' onPress={ProfilesPressed} />
+                            <SwipableComponent text='Genres & Moods' type='Primary' onPress={GenresMoodsPressed} />
                         </View>
                     )
                 }}
@@ -30,5 +30,5 @@ const SwipeComp = () => {
 export default SwipeComp
 
 const styles = StyleSheet.create({
-    
+
 })
