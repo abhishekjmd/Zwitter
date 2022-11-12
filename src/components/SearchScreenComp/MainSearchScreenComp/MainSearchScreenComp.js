@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import SwipeComp from './SwipeComp'
 import styles from './Styles'
 
-
+import { PlaylistComp, AlbumsComp, ArtistComp } from './SubSearchComps'
 
 // ----------------- SEARCH BAR COMPONENT ------------
 const SearchBarComp = ({ onEndEditing, value, onChangeText }) => {
@@ -49,6 +49,7 @@ const MainSearchScreenComp = () => {
     const [value, setValue] = useState('')
     const [type, setType] = useState('')
 
+
     //-------------- ONPRESS FUNCTIONS ---------------
     const OnSongsPressed = () => { setType('track'); }
     const OnPlaylistsPressed = () => { setType('playlist'); }
@@ -57,30 +58,72 @@ const MainSearchScreenComp = () => {
     const OnPodcastShowsPressed = () => { setType('show'); }
     const OnProfilesPressed = () => { setType('album'); }
     const OnGenreMoodsPrssed = () => { setType('album'); }
+
+
     //------------- APICALL FUNCTION ----------------
     const SearchApiCall = async () => {
         const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=${type}&market=IN`;
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQBNPWq9RNo8kVihpPMJUP4IfBZ2Cxu-MNi5xMHbaHbR5YGyId3JnugnGcK_KKSPtsKpXtUaLrzMGZPE5yDcJn8Be9ydFAk8RkaQ2SggExANch4cfhThztwxU7cInR4--3A39H3CfEo4Ufw4C2NiGTrP3As92DJYXN0G-Vdvnz1vOUPyXNSXMlD4kLP4tMZGGMqY0jtfmToY7blxBK9ECWZ52ACjK4C8hiY9T7YDn2-ddLBktw7zC0YlTPAh2s7LOarcXrL1JG1M7g' },
+                    { 'Authorization': 'Bearer ' + 'BQCurMrIsAG_MJeEq4g2AHGJIkRSu3DLLssXznhodttYv0Pl4sjsoZeuReLu468BATsg0aNMKSdHJytf8z_ZETHrOSEF5We3vAFU1dWNUnEiAH2UI0RqNPbyPfFQQ-0og57Rczs2vvWAngkmQ-OXKo62uV5epyLO1m_Ne0frlgWG0FZwJ3IxcRv06dRSwXXp1_OKnQrq6lxNx3_2REv7mBYoQS2JGYdAnQ9OzlkR1FyWx-NQ7AConCPnh6Oi0MH6c5B7_Gb04LjlCA' },
                 json: true
             })
             const result = await res.json();
-            console.log(result);
-            // const finalResult = await result+{type};
-            // console.log(finalResult.albums);
-            // if (finalResult.length > 0) {
-            // setResponse(result.);
-            // console.log(`result${type}`);
+            // console.log(result);
 
-            // } else {
-            // setResponse('');
+            // ---------------------- CONDITIONAL VARIABLES ----------------------
+            const finalTrackResult = await result.tracks;
+            const Album = await result.albums;
+            const Artist = await result.artists;
+            const Playlist = await result.playlists;
+            const Podcast = await result.shows;
 
-            // }
+
+            // ---------------- CONDITIONALS --------------
+            if (type != finalTrackResult) {
+                // setResponse(result.tracks);
+                console.log(result);
+            }
+            else if (type != Album) {
+                if (Album.length > 0) {
+                    console.log(result);
+                    // setResponse(result.albums);
+                } else (
+                    console.log('second if error')
+                )
+            }
+            else if (type != Artist) {
+                if (Artist.length > 0) {
+                    console.log(result);
+                    // setResponse(result.artists);
+                } else (
+                    console.log('third if error')
+                )
+            }
+            else if (type != Playlist) {
+                if (Playlist.length > 0) {
+                    console.log(result);
+                    // setResponse(result.albums);
+                } else (
+                    console.log('forth if error')
+                )
+            }
+            else if (type != Podcast) {
+                if (Podcast.length > 0) {
+                    console.log(result);
+                    // setResponse(result.albums);
+                } else (
+                    console.log('fifth if error')
+                )
+            }
+            else {
+                setResponse('');
+                console.log('not working');
+            }
+
         } catch (error) {
             console.log(error)
-
         }
     }
     useEffect(() => {
@@ -95,10 +138,12 @@ const MainSearchScreenComp = () => {
             />
 
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
+
             <FlatList
-                data={response.items}
+                data={response.items && response.items}
                 renderItem={({ item }) => {
                     return (
+
                         <SearchResultComp trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} image={item.album.images[0].url} />
                     )
                 }}
