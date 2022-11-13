@@ -3,7 +3,7 @@ import React from 'react'
 import MainSearchScreenComp from '../../../components/SearchScreenComp/MainSearchScreenComp/MainSearchScreenComp'
 const MainSearchScreen = () => {
   return (
-    <View>
+    <View style={styles.root}>
       <MainSearchScreenComp />
     </View>
   )
@@ -11,4 +11,8 @@ const MainSearchScreen = () => {
 
 export default MainSearchScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  root: {
+    flex: 1
+  }
+})

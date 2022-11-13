@@ -5,8 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import SwipeComp from './SwipeComp'
 import styles from './Styles'
+import { AlbumsComp, ArtistComp, PlaylistComp } from './SubSearchComps';
 
-import { PlaylistComp, AlbumsComp, ArtistComp } from './SubSearchComps'
 
 // ----------------- SEARCH BAR COMPONENT ------------
 const SearchBarComp = ({ onEndEditing, value, onChangeText }) => {
@@ -42,7 +42,7 @@ const SearchResultComp = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) 
 
 
 
-const MainSearchScreenComp = () => {
+const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
 
     //  --------------- STATES -------------------
     const [response, setResponse] = useState('');
@@ -56,8 +56,8 @@ const MainSearchScreenComp = () => {
     const OnAlbumsPressed = () => { setType('album'); }
     const OnArtistPressed = () => { setType('artist'); }
     const OnPodcastShowsPressed = () => { setType('show'); }
-    const OnProfilesPressed = () => { setType('album'); }
-    const OnGenreMoodsPrssed = () => { setType('album'); }
+    const OnProfilesPressed = () => { setType(album); }
+    const OnGenreMoodsPrssed = () => { setType(album); }
 
 
     //------------- APICALL FUNCTION ----------------
@@ -66,61 +66,71 @@ const MainSearchScreenComp = () => {
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQCurMrIsAG_MJeEq4g2AHGJIkRSu3DLLssXznhodttYv0Pl4sjsoZeuReLu468BATsg0aNMKSdHJytf8z_ZETHrOSEF5We3vAFU1dWNUnEiAH2UI0RqNPbyPfFQQ-0og57Rczs2vvWAngkmQ-OXKo62uV5epyLO1m_Ne0frlgWG0FZwJ3IxcRv06dRSwXXp1_OKnQrq6lxNx3_2REv7mBYoQS2JGYdAnQ9OzlkR1FyWx-NQ7AConCPnh6Oi0MH6c5B7_Gb04LjlCA' },
+                    { 'Authorization': 'Bearer ' + 'BQC1PXFFM0hgWvs_ZMdWfMtf5Hz-_IzQ0a6-5dA5YQTRU__dqkkNAFaz5yEpGsVO0Jbfw78Osj86FQb3xRZGaXfS_DZeBUSaF66QW6Yc_2_WcAoIngzaF1Mi3z8uj5KNyUdb8h71P4fXFJEoNFMIS7pCXU68ShiT8Huyx8Onj0cYJPRQYRwLCEYIHSxAhqgqGn6vf2ALNvRYttBQGTPsPoJLdLY0T6P_SbBTX05et6cNiZW47ialPiOLtDAjHenbhWPlUPVE2nckSQ' },
                 json: true
             })
             const result = await res.json();
-            // console.log(result);
-
-            // ---------------------- CONDITIONAL VARIABLES ----------------------
-            const finalTrackResult = await result.tracks;
-            const Album = await result.albums;
-            const Artist = await result.artists;
-            const Playlist = await result.playlists;
-            const Podcast = await result.shows;
+            console.log(result);
 
 
             // ---------------- CONDITIONALS --------------
-            if (type != finalTrackResult) {
-                // setResponse(result.tracks);
-                console.log(result);
-            }
-            else if (type != Album) {
-                if (Album.length > 0) {
-                    console.log(result);
-                    // setResponse(result.albums);
+            if (result.tracks != undefined) {
+                const trackResult = result.tracks.items;
+                if (trackResult.length > 0) {
+                    console.log('track case working');
                 } else (
-                    console.log('second if error')
+                    console.log('track case wont work')
+                )
+
+            }
+            else if (result.albums != undefined) {
+                const albumResult = result.albums.items;
+                if (albumResult.length > 0) {
+                    console.log(result)
+                } else (
+                    console.log('albums case not working')
                 )
             }
-            else if (type != Artist) {
-                if (Artist.length > 0) {
-                    console.log(result);
-                    // setResponse(result.artists);
-                } else (
-                    console.log('third if error')
-                )
+            else if (result.playlists != undefined) {
+                const playlistResult = result.playlists.items;
+                if (playlistResult.length > 0) {
+                    console.log('playlists result works ')
+                }
+                else {
+                    console.log('playlists  result wont work')
+                }
             }
-            else if (type != Playlist) {
-                if (Playlist.length > 0) {
-                    console.log(result);
-                    // setResponse(result.albums);
-                } else (
-                    console.log('forth if error')
-                )
+            else if (result.artists != undefined) {
+                const artistResult = result.artists.items;
+                if (artistResult.length > 0) {
+                    console.log('artist result works ')
+                }
+                else {
+                    console.log('artist result wont work')
+                }
             }
-            else if (type != Podcast) {
-                if (Podcast.length > 0) {
-                    console.log(result);
-                    // setResponse(result.albums);
-                } else (
-                    console.log('fifth if error')
-                )
+            else if (result.shows != undefined) {
+                const showsPodcastResult = result.shows.items;
+                if (showsPodcastResult.length > 0) {
+                    console.log('shows result works ')
+                }
+                else {
+                    console.log('shows result wont work')
+                }
             }
             else {
                 setResponse('');
                 console.log('not working');
             }
+
+            // const Album = await result.albums;
+            // if (Album == type) {
+            // console.log('album result working')
+            // } else (/
+            // setResponse(result.albums),
+            // console.log('album wont work')
+            // )
+
 
         } catch (error) {
             console.log(error)
@@ -136,29 +146,15 @@ const MainSearchScreenComp = () => {
                 onChangeText={(e => setValue(e))}
                 onEndEditing={(e) => { setValue(e) }}
             />
-
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
-
             <FlatList
-                data={response.items && response.items}
-                renderItem={({ item }) => {
-                    return (
-
-                        <SearchResultComp trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} image={item.album.images[0].url} />
-                    )
+                data={response}
+                renderItem={({ item, index }) => {
+                    <View key={index} style={{ height: 40, width: '100%' }}>
+                        <Text> {item.href} </Text>
+                    </View>
                 }}
             />
-
-            {/*
-            <FlatList
-                data={response.items && response.items}
-                renderItem={({ item }) => {
-                    return(
-                        <SearchResultComp trackName={item.name} Owner={item.artists[0].name} image={item.album.images[0].url} />
-                    )
-                }}
-            />
-            */}
         </View>
     )
 }

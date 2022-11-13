@@ -1,28 +1,30 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-export const AlbumsComp = () => {
+
+
+export const AlbumsComps = ({ Image, AlbumName, SingerThree, SingerTwo, SingerOne }) => {
     return (
         <View style={styles.root}>
             <View style={styles.imageContainer}>
-                <Image source={require('../../../../Album.jpeg')} style={styles.image} />
+                <Image source={{ uri: Image }} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.firstText}>Jhaanjar (from Honeymoon)</Text>
-                <Text style={styles.secondText}> B Praak, Jaani </Text>
+                <Text style={styles.firstText}> {AlbumName} </Text>
+                <Text style={styles.secondText}> {SingerOne}. {SingerTwo}.{SingerThree} </Text>
             </View>
         </View>
     )
 }
 
-export const ArtistComp = () => {
+export const ArtistComp = ({image,artistName}) => {
     return (
         <View style={styles.MainAlbumContainer}>
             <View style={styles.AlbumImageContainer}>
-                <Image source={require('../../../../Artist.jpeg')} style={styles.AlbumImage} />
+                <Image source={{uri:image}} style={styles.AlbumImage} />
             </View>
             <View style={styles.AlbumTextContainer}>
-                <Text style={styles.AlbumText}>Abhash Jha </Text>
+                <Text style={styles.AlbumText}> {artistName} </Text>
                 <MaterialIcons name='verified' size={20} color='#00acee' />
             </View>
         </View>
@@ -36,25 +38,11 @@ export const PlaylistComp = () => {
                 <Image source={require('../../../../Playlist.jpeg')} style={styles.PlaylistImage} />
             </View>
             <View style={styles.PlaylistTextContainer}>
-            <Text style={styles.PlaylistText}>Jalle</Text>
+                <Text style={styles.PlaylistText}>Jalle</Text>
             </View>
         </View>
     )
 }
-
-
-
-const SubSearchComps = () => {
-    return (
-        <View style={{flexDirection:'row'}}>
-            <PlaylistComp />
-            <PlaylistComp />
-
-        </View>
-    )
-}
-
-export default SubSearchComps
 
 const styles = StyleSheet.create({
     root: {
@@ -117,31 +105,31 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '500'
     },
-    PlaylistMainContainer:{
+    PlaylistMainContainer: {
         width: '45%',
         height: 200,
         backgroundColor: 'green',
         marginLeft: '2%',
-        justifyContent:'center',
+        justifyContent: 'center',
         // alignItems:'center'      
     },
-    PlaylistImageContainer:{
-        width: '100%',   
-         height: '75%'
+    PlaylistImageContainer: {
+        width: '100%',
+        height: '75%'
     },
-    PlaylistImage:{
-        width:'100%',
-        height:'100%'
+    PlaylistImage: {
+        width: '100%',
+        height: '100%'
     },
-    PlaylistTextContainer:{
-        width:'100%',
+    PlaylistTextContainer: {
+        width: '100%',
         // backgroundColor:'yellow',
-        marginTop:'3%',
-        height:'15%',
+        marginTop: '3%',
+        height: '15%',
     },
-    PlaylistText:{
-     color:'white',
-     fontSize:18,
-     fontWeight:'500'
+    PlaylistText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: '500'
     },
 })

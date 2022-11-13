@@ -4,12 +4,11 @@ import { authorize } from 'react-native-app-auth';
 import TabNavigation from './src/navigation/TabNavigation/Index'
 import MainSearchScreen from './src/screens/SearchScreen/MainSearchScreen/MainSearchScreen';
 import SwipeComp from './src/components/SearchScreenComp/MainSearchScreenComp/SwipeComp';
-import SubSearchComps from './src/components/SearchScreenComp/MainSearchScreenComp/SubSearchComps';
+import { AlbumsComps, PlaylistComp, ArtistComp } from './src/components/SearchScreenComp/MainSearchScreenComp/SubSearchComps';
 
 const authConfig = {
   // clientId: 'facd2be1aa6c4a9c99089141bed15e30',
   clientId: 'e16476e0d6be41a1b90668c7176ffe36',
-
   // optional clien secret
   clientSecret: '34a18b7e534a43558e1b0cb071963b5b',
   redirectUrl: 'app://deeplink',
@@ -40,7 +39,8 @@ const App = () => {
   }
   return (
     <View style={styles.root}>
-      <MainSearchScreen /> 
+      <MainSearchScreen />
+      
     </View>
   )
 }
