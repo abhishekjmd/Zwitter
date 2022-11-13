@@ -3,25 +3,25 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 
-export const AlbumsComps = ({ Image, AlbumName, SingerThree, SingerTwo, SingerOne }) => {
+export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne }) => {
     return (
         <View style={styles.root}>
             <View style={styles.imageContainer}>
-                <Image source={{ uri: Image }} style={styles.image} />
+                <Image source={{ uri: image }} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.firstText}> {AlbumName} </Text>
-                <Text style={styles.secondText}> {SingerOne}. {SingerTwo}.{SingerThree} </Text>
+                <Text style={styles.firstText}> {albumName} </Text>
+                <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
             </View>
         </View>
     )
 }
 
-export const ArtistComp = ({image,artistName}) => {
+export const ArtistComp = ({ image, artistName }) => {
     return (
         <View style={styles.MainAlbumContainer}>
             <View style={styles.AlbumImageContainer}>
-                <Image source={{uri:image}} style={styles.AlbumImage} />
+                <Image source={{ uri: image }} style={styles.AlbumImage} />
             </View>
             <View style={styles.AlbumTextContainer}>
                 <Text style={styles.AlbumText}> {artistName} </Text>
@@ -31,14 +31,14 @@ export const ArtistComp = ({image,artistName}) => {
     )
 }
 
-export const PlaylistComp = () => {
+export const PlaylistComp = ({playlistName,image}) => {
     return (
         <View style={styles.PlaylistMainContainer}>
             <View style={styles.PlaylistImageContainer}>
-                <Image source={require('../../../../Playlist.jpeg')} style={styles.PlaylistImage} />
+                <Image source={{ uri: image }} style={styles.PlaylistImage}  />
             </View>
             <View style={styles.PlaylistTextContainer}>
-                <Text style={styles.PlaylistText}>Jalle</Text>
+                <Text style={styles.PlaylistText}> {playlistName.length > 25 ? playlistName.slice(0,25) + '...' : playlistName } </Text>
             </View>
         </View>
     )
@@ -106,30 +106,29 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     PlaylistMainContainer: {
-        width: '45%',
-        height: 200,
-        backgroundColor: 'green',
-        marginLeft: '2%',
         justifyContent: 'center',
-        // alignItems:'center'      
+        alignItems:'center',      
+        width: '48%',
+        margin: '1%',
+        height: 200,
     },
     PlaylistImageContainer: {
-        width: '100%',
-        height: '75%'
+        height: '75%',
+        width: '80%',
     },
     PlaylistImage: {
+        height: '100%',
         width: '100%',
-        height: '100%'
     },
     PlaylistTextContainer: {
-        width: '100%',
-        // backgroundColor:'yellow',
-        marginTop: '3%',
-        height: '15%',
+        justifyContent:'center',
+        height: '20%',
+        width: '85%',
+        alignItems:'flex-start'
     },
     PlaylistText: {
+        fontWeight: '500',
         color: 'white',
-        fontSize: 18,
-        fontWeight: '500'
+        fontSize: 14,
     },
 })

@@ -1,5 +1,5 @@
-import { Text, View, TextInput, FlatList, Image, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { Text, View, TextInput, FlatList, Image, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -42,7 +42,7 @@ const SearchResultComp = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) 
 
 
 
-const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
+const MainSearchScreenComp = ({ album }) => {
 
     //  --------------- STATES -------------------
     const [response, setResponse] = useState('');
@@ -66,14 +66,14 @@ const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQC1PXFFM0hgWvs_ZMdWfMtf5Hz-_IzQ0a6-5dA5YQTRU__dqkkNAFaz5yEpGsVO0Jbfw78Osj86FQb3xRZGaXfS_DZeBUSaF66QW6Yc_2_WcAoIngzaF1Mi3z8uj5KNyUdb8h71P4fXFJEoNFMIS7pCXU68ShiT8Huyx8Onj0cYJPRQYRwLCEYIHSxAhqgqGn6vf2ALNvRYttBQGTPsPoJLdLY0T6P_SbBTX05et6cNiZW47ialPiOLtDAjHenbhWPlUPVE2nckSQ' },
+                    { 'Authorization': 'Bearer ' + 'BQCSCSBOXH-sOndnFNljX-gPfJqU4dC39rjxHF8xVBKw8cwdhDTm3KNmLTczt4IMNN01E4swTI0P8OgrBf9F47x1rUcI_KxVQ4fta9OJ8wYX7q3_kzNM07vck-kfLvUvu-6FSwT2gWdy7emhPFrucV-a7yFdnx7QH0c8cS-G-1sOVWPK1LrcSKVT3gIQMlBOUpQXRpx1IVbp0fMosLFUdsqiSi55Gzt18RaS41l_2AzFu9eYI8VQpNHAQ1gVvzDnmQ8n7bD05AosbQ' },
                 json: true
             })
             const result = await res.json();
             console.log(result);
 
 
-            // ---------------- CONDITIONALS --------------
+            //  ---------------- CONDITIONALS --------------
             if (result.tracks != undefined) {
                 const trackResult = result.tracks.items;
                 if (trackResult.length > 0) {
@@ -94,10 +94,14 @@ const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
             else if (result.playlists != undefined) {
                 const playlistResult = result.playlists.items;
                 if (playlistResult.length > 0) {
-                    console.log('playlists result works ')
+
+                    console.log('playlists result works ');
+                    setResponse(result.playlists);
+
                 }
                 else {
-                    console.log('playlists  result wont work')
+                    console.log('playlists  result wont work'),
+                        setResponse('')
                 }
             }
             else if (result.artists != undefined) {
@@ -123,15 +127,6 @@ const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
                 console.log('not working');
             }
 
-            // const Album = await result.albums;
-            // if (Album == type) {
-            // console.log('album result working')
-            // } else (/
-            // setResponse(result.albums),
-            // console.log('album wont work')
-            // )
-
-
         } catch (error) {
             console.log(error)
         }
@@ -147,13 +142,17 @@ const MainSearchScreenComp = ({ track, playlist, album, artist, show, }) => {
                 onEndEditing={(e) => { setValue(e) }}
             />
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
+
             <FlatList
-                data={response}
-                renderItem={({ item, index }) => {
-                    <View key={index} style={{ height: 40, width: '100%' }}>
-                        <Text> {item.href} </Text>
-                    </View>
+                data={response.items}
+                key={'_'}
+                keyExtractor={item => "_" + item.id}
+                renderItem={({ item }) => {
+                    return (
+                        <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+                    )
                 }}
+                numColumns={2}
             />
         </View>
     )
