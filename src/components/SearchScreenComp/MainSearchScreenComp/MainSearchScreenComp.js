@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import SwipeComp from './SwipeComp'
 import styles from './Styles'
-import { AlbumsComp, ArtistComp, PlaylistComp } from './SubSearchComps';
+import { AlbumsComps, ArtistComp, PlaylistComp } from './SubSearchComps';
 
 
 // ----------------- SEARCH BAR COMPONENT ------------
@@ -87,8 +87,10 @@ const MainSearchScreenComp = ({ album }) => {
                 const albumResult = result.albums.items;
                 if (albumResult.length > 0) {
                     console.log(result)
+                    setResponse(result.albums);
                 } else (
-                    console.log('albums case not working')
+                    console.log('albums case not working'),
+                    setResponse('')
                 )
             }
             else if (result.playlists != undefined) {
@@ -156,9 +158,10 @@ const MainSearchScreenComp = ({ album }) => {
                             {
                                 /*
                                 <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+                                <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
                                 
                                 */
-                                <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
+                                <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
                             }
                         </>
 

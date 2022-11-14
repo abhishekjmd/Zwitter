@@ -3,15 +3,17 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 
-export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne }) => {
+export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne, albumType, releaseYear }) => {
     return (
         <View style={styles.root}>
             <View style={styles.imageContainer}>
                 <Image source={{ uri: image }} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.firstText}> {albumName} </Text>
+                <Text style={styles.firstText}> {albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
                 <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
+                <Text style={styles.thirdText}> {albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
+
             </View>
         </View>
     )
@@ -31,14 +33,14 @@ export const ArtistComp = ({ image, artistName }) => {
     )
 }
 
-export const PlaylistComp = ({playlistName,image}) => {
+export const PlaylistComp = ({ playlistName, image }) => {
     return (
         <View style={styles.PlaylistMainContainer}>
             <View style={styles.PlaylistImageContainer}>
-                <Image source={{ uri: image }} style={styles.PlaylistImage}  />
+                <Image source={{ uri: image }} style={styles.PlaylistImage} />
             </View>
             <View style={styles.PlaylistTextContainer}>
-                <Text style={styles.PlaylistText}> {playlistName.length > 25 ? playlistName.slice(0,25) + '...' : playlistName } </Text>
+                <Text style={styles.PlaylistText}> {playlistName.length > 25 ? playlistName.slice(0, 25) + '...' : playlistName} </Text>
             </View>
         </View>
     )
@@ -46,10 +48,10 @@ export const PlaylistComp = ({playlistName,image}) => {
 
 const styles = StyleSheet.create({
     root: {
-        width: '45%',
+        width: '48%',
         height: 250,
-        backgroundColor: 'green',
-        marginLeft: '2%'
+        // backgroundColor: 'green',
+        margin: '1.5%'
     },
     imageContainer: {
         width: '100%',
@@ -61,14 +63,27 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         width: '100%',
-        marginTop: '4%'
+        marginTop: '4%',
+        height: '26%',
+        justifyContent: 'center'
     },
     firstText: {
         color: 'white',
-        fontWeight: '500'
+        fontWeight: '500',
+        fontSize: 17,
     },
     secondText: {
-        color: '#d7d8db'
+        color: '#d7d8db',
+        fontWeight: '500',
+        fontSize: 16,
+
+
+    },
+    thirdText: {
+        color: '#d7d8db',
+        fontWeight: '500',
+        fontSize: 16,
+
     },
     MainArtistContainer: {
         alignItems: 'center',
@@ -102,7 +117,7 @@ const styles = StyleSheet.create({
     },
     PlaylistMainContainer: {
         justifyContent: 'center',
-        alignItems:'center',      
+        alignItems: 'center',
         width: '48%',
         margin: '1%',
         height: 200,
@@ -116,10 +131,10 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     PlaylistTextContainer: {
-        justifyContent:'center',
+        justifyContent: 'center',
         height: '20%',
         width: '85%',
-        alignItems:'flex-start'
+        alignItems: 'flex-start'
     },
     PlaylistText: {
         fontWeight: '500',
