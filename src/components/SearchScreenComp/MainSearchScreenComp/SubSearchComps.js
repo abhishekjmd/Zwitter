@@ -2,6 +2,24 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+export const SearchComps = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) => {
+    return (
+        <View style={styles.ResultContainer}>
+            <View style={styles.ResultSubContainer}>
+                <View style={styles.ImageContainer}>
+                    <Image source={{ uri: image }} style={styles.image} />
+                </View>
+                <View style={styles.TextContainer}>
+                    <Text style={styles.SearchText}> {trackName} </Text>
+                    <Text style={styles.SearchTexttTwo}> {Artist}, {ArtistTwo}, {ArtistThree} 
+                    </Text>
+                </View>
+            </View>
+        </View>
+
+    )
+}
+
 
 export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne, albumType, releaseYear }) => {
     return (
@@ -12,7 +30,7 @@ export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOn
             <View style={styles.textContainer}>
                 <Text style={styles.firstText}> {albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
                 <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
-                <Text style={styles.thirdText}> {albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
+                <Text style={styles.thirdText}> {albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
 
             </View>
         </View>
@@ -47,6 +65,47 @@ export const PlaylistComp = ({ playlistName, image }) => {
 }
 
 const styles = StyleSheet.create({
+    ResultContainer: {
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        width: '100%',
+        // marginTop: 5,
+        height: 80,
+    },
+    ResultSubContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        height: 70,
+    },
+    ImageContainer: {
+        borderRadius: 10,
+        height: '80%',
+        width: '15%',
+        marginLeft: '2%',
+
+    },
+    image: {
+        borderRadius: 5,
+        height: '100%',
+        width: '100%',
+
+    },
+    TextContainer: {
+        marginLeft: '2%',
+        height: '80%',
+        width: '74%',
+        // backgroundColor:'red'
+    },
+    SearchText: {
+        fontWeight: '500',
+        color: 'white',
+        fontSize: 18,
+    },
+    SearchTexttTwo: {
+        color: '#cacfcc',
+        fontWeight:'500'
+    },
     root: {
         width: '48%',
         height: 250,

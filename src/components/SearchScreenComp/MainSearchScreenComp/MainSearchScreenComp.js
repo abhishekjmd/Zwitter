@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import SwipeComp from './SwipeComp'
 import styles from './Styles'
-import { AlbumsComps, ArtistComp, PlaylistComp } from './SubSearchComps';
+import { AlbumsComps, ArtistComp, PlaylistComp, SearchComps } from './SubSearchComps';
 
 
 // ----------------- SEARCH BAR COMPONENT ------------
@@ -23,22 +23,6 @@ const SearchBarComp = ({ onEndEditing, value, onChangeText }) => {
 }
 
 // ------------- SEARCH RESULT COMPONENT ----------
-const SearchResultComp = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) => {
-    return (
-        <View style={styles.ResultContainer}>
-            <View style={styles.ResultSubContainer}>
-                <View style={styles.ImageContainer}>
-                    <Image source={{ uri: image }} style={styles.image} />
-                </View>
-                <View style={styles.TextContainer}>
-                    <Text style={styles.SearchText}> {trackName.length > 34 ? trackName.slice(0, 30) + ' ...' : trackName} </Text>
-                    <Text style={styles.SearchTexttTwo}> {Artist} {ArtistTwo} {ArtistThree && ArtistThree.length > 10 ? ArtistThree.slice(0, 10) + '...' : ArtistThree} </Text>
-                </View>
-            </View>
-        </View>
-
-    )
-}
 
 
 
@@ -62,24 +46,28 @@ const MainSearchScreenComp = ({ album }) => {
 
     //------------- APICALL FUNCTION ----------------
     const SearchApiCall = async () => {
-        const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=${type}&market=IN`;
+        const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=${type}&market=IN&limit=50`;
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQCyE0qWEx3dz5sDtW8XHnQZhUYruX9UCL-WPVoubnyO8Fy6DJ6b6IQHaS5llpCtASM3CUZmUcH_2ZRAX1gKjuyEAbqVpNT8B1QorpA_ka-HGoidcNW4K7qfgcNGiSpyGVmzG5iqcVWZREnEByFPdDwM04gVeZVBlJwERwm28z2JtZPCxj7tUGhGdu-_lUyc28fmqfzY1YWN631XlOqIE1tfPwG5WGv_ShljfKfKUt6BL3Dqm_jq2dCYp1LynC8ToKDg891s73_2Ew' },
+                    { 'Authorization': 'Bearer ' + 'BQB1rdF3TxM6vGmzWHEZnSwRGOjhH1NIMDilFCgqGfmKx6VnkugYbmxDLcATR07tY5MAZPCFrC588JspCF7Bgm0qCiiwnDUGcTMGuV8Gy2NLOseMz2VBJddGBfsAfur0VlEl0PW-8zqumYOlmNXcHMB1koTvQbaGbhh7n8ZaFuG9h8UC6P-sddL6OLG2meI3qLwo4zPflQSdEuPrvLf-bBXR1f2KJP9Ae9pKBDUAyCt7aRv9g3Omtcbl5oBAuoFeEPsVTAPrIXF_yA' },
                 json: true
             })
             const result = await res.json();
             console.log(result);
 
-
+            const resultFinal = result.tracks.items;
+            const finaLlenth = resultFinal.length;
+            console.log(finaLlenth);
             //  ---------------- CONDITIONALS --------------
             if (result.tracks != undefined) {
                 const trackResult = result.tracks.items;
                 if (trackResult.length > 0) {
+                    setResponse(result.tracks);
                     console.log('track case working');
                 } else (
-                    console.log('track case wont work')
+                    console.log('track case wont work'),
+                    setResponse('')
                 )
 
             }
@@ -148,27 +136,25 @@ const MainSearchScreenComp = ({ album }) => {
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
 
             <FlatList
+                style={{ flex: 0 }}
                 data={response.items}
-                key={'_'}
-                keyExtractor={item => "_" + item.id}
-                renderItem={({ item, index }) => {
+                keyExtractor={item => item.id}
+                initialNumToRender={50}
+                renderItem={({ item }) => {
                     return (
-                        <>
 
-                            {
-                                /*
-                                <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
-                                <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
-                                
-                                */
-                                <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
-                            }
-                        </>
-
+                        /*
+                        <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+                        <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
+                        <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
+                        
+                        */
+                            <SearchComps image={item.album.images[0].url} trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1].name ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2].name ? item.artists[2].name : null} />
                     )
                 }}
-                numColumns={2}
             />
+
+
         </View>
     )
 }

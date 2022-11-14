@@ -23,47 +23,6 @@ const Styles = StyleSheet.create({
     Icon: {
         color: 'white'
     },
-    ResultContainer: {
-        backgroundColor: 'black',
-        justifyContent:'center',
-        width: '100%',
-        // marginTop: 5,
-        height: 80,
-    },
-    ResultSubContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        height: 70,
-    },
-    ImageContainer: {
-        borderRadius: 10,
-        height: '80%',
-        width: '15%',
-        marginLeft:'2%',
-
-    },
-    image: {
-        borderRadius: 5,
-        height: '100%',
-        width: '100%',
-
-    },
-    TextContainer: {
-        marginLeft: '2%',
-        height: '80%',
-        width: '74%',
-        // backgroundColor:'red'
-    },
-    SearchText: {
-        fontWeight: '500',
-        color: 'white',
-        fontSize: 18,
-    },
-    SearchTexttTwo: {
-        color: '#cacfcc',
-        fontSize: 15
-    },
     MainSwipeComp: {
         backgroundColor: 'green',
         width: '100%',
