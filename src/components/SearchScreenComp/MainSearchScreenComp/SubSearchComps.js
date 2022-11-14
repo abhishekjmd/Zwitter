@@ -19,12 +19,12 @@ export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOn
 
 export const ArtistComp = ({ image, artistName }) => {
     return (
-        <View style={styles.MainAlbumContainer}>
-            <View style={styles.AlbumImageContainer}>
-                <Image source={{ uri: image }} style={styles.AlbumImage} />
+        <View style={styles.MainArtistContainer}>
+            <View style={styles.ArtistImageContainer}>
+                <Image source={{ uri: image }} style={styles.ArtistImage} />
             </View>
-            <View style={styles.AlbumTextContainer}>
-                <Text style={styles.AlbumText}> {artistName} </Text>
+            <View style={styles.ArtistTextContainer}>
+                <Text style={styles.ArtistText}> {artistName} </Text>
                 <MaterialIcons name='verified' size={20} color='#00acee' />
             </View>
         </View>
@@ -70,40 +70,35 @@ const styles = StyleSheet.create({
     secondText: {
         color: '#d7d8db'
     },
-    MainAlbumContainer: {
+    MainArtistContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
         width: '100%',
-        height: 80,
-        backgroundColor: 'green',
-        flexDirection: 'row',
-        // justifyContent:'center',
-        alignItems: 'center'
+        height: 70,
     },
-    AlbumImageContainer: {
-        width: '15%',
-        height: '70%',
-        // backgroundColor: 'red',
-        marginLeft: '2%',
-        alignItems: 'center',
+    ArtistImageContainer: {
         justifyContent: 'center',
-    },
-    AlbumImage: {
-        width: '90%',
-        height: '90%',
-        borderRadius: 20,
-    },
-    AlbumTextContainer: {
-        width: '65%',
-        height: '70%',
-        // backgroundColor:'yellow',
-        marginLeft: '2%',
         alignItems: 'center',
-        // justifyContent: 'center',
-        flexDirection: 'row',
+        marginLeft: '2%',
+        height: '70%',
+        width: '12%',
     },
-    AlbumText: {
+    ArtistImage: {
+        borderRadius: 20,
+        height: '90%',
+        width: '90%',
+    },
+    ArtistTextContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginLeft: '2%',
+        height: '70%',
+        width: '65%',
+    },
+    ArtistText: {
+        fontWeight: '500',
         color: 'white',
         fontSize: 22,
-        fontWeight: '500'
     },
     PlaylistMainContainer: {
         justifyContent: 'center',

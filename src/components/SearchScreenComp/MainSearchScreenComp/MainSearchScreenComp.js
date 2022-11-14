@@ -66,7 +66,7 @@ const MainSearchScreenComp = ({ album }) => {
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQCSCSBOXH-sOndnFNljX-gPfJqU4dC39rjxHF8xVBKw8cwdhDTm3KNmLTczt4IMNN01E4swTI0P8OgrBf9F47x1rUcI_KxVQ4fta9OJ8wYX7q3_kzNM07vck-kfLvUvu-6FSwT2gWdy7emhPFrucV-a7yFdnx7QH0c8cS-G-1sOVWPK1LrcSKVT3gIQMlBOUpQXRpx1IVbp0fMosLFUdsqiSi55Gzt18RaS41l_2AzFu9eYI8VQpNHAQ1gVvzDnmQ8n7bD05AosbQ' },
+                    { 'Authorization': 'Bearer ' + 'BQCyE0qWEx3dz5sDtW8XHnQZhUYruX9UCL-WPVoubnyO8Fy6DJ6b6IQHaS5llpCtASM3CUZmUcH_2ZRAX1gKjuyEAbqVpNT8B1QorpA_ka-HGoidcNW4K7qfgcNGiSpyGVmzG5iqcVWZREnEByFPdDwM04gVeZVBlJwERwm28z2JtZPCxj7tUGhGdu-_lUyc28fmqfzY1YWN631XlOqIE1tfPwG5WGv_ShljfKfKUt6BL3Dqm_jq2dCYp1LynC8ToKDg891s73_2Ew' },
                 json: true
             })
             const result = await res.json();
@@ -108,9 +108,11 @@ const MainSearchScreenComp = ({ album }) => {
                 const artistResult = result.artists.items;
                 if (artistResult.length > 0) {
                     console.log('artist result works ')
+                    setResponse(result.artists);
                 }
                 else {
                     console.log('artist result wont work')
+                    setResponse('')
                 }
             }
             else if (result.shows != undefined) {
@@ -147,9 +149,19 @@ const MainSearchScreenComp = ({ album }) => {
                 data={response.items}
                 key={'_'}
                 keyExtractor={item => "_" + item.id}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                     return (
-                        <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+                        <>
+
+                            {
+                                /*
+                                <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+                                
+                                */
+                                <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
+                            }
+                        </>
+
                     )
                 }}
                 numColumns={2}
