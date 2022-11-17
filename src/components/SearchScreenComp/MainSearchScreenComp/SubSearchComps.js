@@ -31,13 +31,12 @@ export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOn
                 <Text style={styles.firstText}> {albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
                 <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
                 <Text style={styles.thirdText}> {albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
-
             </View>
         </View>
     )
 }
 
-export const ArtistComp = ({ image, artistName }) => {
+export const ArtistComp = ({ image, artistName ,Icon }) => {
     return (
         <View style={styles.MainArtistContainer}>
             <View style={styles.ArtistImageContainer}>
@@ -45,7 +44,7 @@ export const ArtistComp = ({ image, artistName }) => {
             </View>
             <View style={styles.ArtistTextContainer}>
                 <Text style={styles.ArtistText}> {artistName} </Text>
-                <MaterialIcons name='verified' size={20} color='#00acee' />
+                <MaterialIcons name={Icon} size={20} color='#00acee' />
             </View>
         </View>
     )

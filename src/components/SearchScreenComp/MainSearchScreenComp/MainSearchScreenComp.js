@@ -22,7 +22,9 @@ const SearchBarComp = ({ onEndEditing, value, onChangeText }) => {
     )
 }
 
-// ------------- SEARCH RESULT COMPONENT ----------
+// ----------- CONDITIONAL RESULT COMPONENT ----------
+
+
 
 
 
@@ -32,7 +34,7 @@ const MainSearchScreenComp = ({ album }) => {
     const [response, setResponse] = useState('');
     const [value, setValue] = useState('')
     const [type, setType] = useState('')
-
+    const [result, setResult] = useState('');
 
     //-------------- ONPRESS FUNCTIONS ---------------
     const OnSongsPressed = () => { setType('track'); }
@@ -50,68 +52,65 @@ const MainSearchScreenComp = ({ album }) => {
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQB1rdF3TxM6vGmzWHEZnSwRGOjhH1NIMDilFCgqGfmKx6VnkugYbmxDLcATR07tY5MAZPCFrC588JspCF7Bgm0qCiiwnDUGcTMGuV8Gy2NLOseMz2VBJddGBfsAfur0VlEl0PW-8zqumYOlmNXcHMB1koTvQbaGbhh7n8ZaFuG9h8UC6P-sddL6OLG2meI3qLwo4zPflQSdEuPrvLf-bBXR1f2KJP9Ae9pKBDUAyCt7aRv9g3Omtcbl5oBAuoFeEPsVTAPrIXF_yA' },
+                    { 'Authorization': 'Bearer ' + 'BQDiFAlJAAaT3x7g7lgETnfFRZbSNKc_Ef8uAa8TzUJ9k9I0jSE-1n9X9ZQOteHMSAMJmqNPT9lopYU6EjGhyhQDvcagJgoruGUnMjVSzuT7YZHtuWriX0jAbnsp_N_ZUW1yN_gaI7acDtwjRNfGx_fPP8UvHpzr26B2Urk6xkTeQmIqf_JUz8EzivV044SSmb2Z9XahMGwH9aGc7HzMYI_bsTJxPIUYTNECDPTCC5Sbz7XsQobpgOLVbpWG6EQ9LZF-fj6j5jwx-Q' },
                 json: true
             })
-            const result = await res.json();
-            console.log(result);
+            const apiResult = await res.json();
+            console.log(apiResult);
+            setResult(apiResult);
 
-            const resultFinal = result.tracks.items;
-            const finaLlenth = resultFinal.length;
-            console.log(finaLlenth);
             //  ---------------- CONDITIONALS --------------
-            if (result.tracks != undefined) {
-                const trackResult = result.tracks.items;
+            if (apiResult.tracks != undefined) {
+                const trackResult = apiResult.tracks.items;
                 if (trackResult.length > 0) {
-                    setResponse(result.tracks);
+                    setResponse(apiResult.tracks);
                     console.log('track case working');
                 } else (
                     console.log('track case wont work'),
                     setResponse('')
                 )
-
             }
-            else if (result.albums != undefined) {
-                const albumResult = result.albums.items;
+            else if (apiResult.albums != undefined) {
+                const albumResult = apiResult.albums.items;
                 if (albumResult.length > 0) {
-                    console.log(result)
-                    setResponse(result.albums);
+                    console.log(apiResult)
+                    setResponse(apiResult.albums);
                 } else (
                     console.log('albums case not working'),
                     setResponse('')
                 )
             }
-            else if (result.playlists != undefined) {
-                const playlistResult = result.playlists.items;
+            else if (apiResult.playlists != undefined) {
+                const playlistResult = apiResult.playlists.items;
                 if (playlistResult.length > 0) {
 
-                    console.log('playlists result works ');
-                    setResponse(result.playlists);
-
+                    console.log('playlists apiResult works ');
+                    setResponse(apiResult.playlists);
                 }
                 else {
-                    console.log('playlists  result wont work'),
+                    console.log('playlists  apiResult wont work'),
                         setResponse('')
                 }
             }
-            else if (result.artists != undefined) {
-                const artistResult = result.artists.items;
+            else if (apiResult.artists != undefined) {
+                const artistResult = apiResult.artists.items;
                 if (artistResult.length > 0) {
-                    console.log('artist result works ')
-                    setResponse(result.artists);
+                    console.log('artist apiResult works ')
+                    setResponse(apiResult.artists);
                 }
                 else {
-                    console.log('artist result wont work')
+                    console.log('artist apiResult wont work')
                     setResponse('')
                 }
             }
-            else if (result.shows != undefined) {
-                const showsPodcastResult = result.shows.items;
+            else if (apiResult.shows != undefined) {
+                const showsPodcastResult = apiResult.shows.items;
                 if (showsPodcastResult.length > 0) {
-                    console.log('shows result works ')
+                    console.log('shows apiResult works ')
+                    setResponse(apiResult.shows);
                 }
                 else {
-                    console.log('shows result wont work')
+                    console.log('shows apiResult wont work')
                 }
             }
             else {
@@ -123,6 +122,29 @@ const MainSearchScreenComp = ({ album }) => {
             console.log(error)
         }
     }
+
+    const RenderItemFunction = ({ item }) => {
+        if (response == result.albums) {
+            return <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
+        } else if (response == result.tracks) {
+            return <SearchComps image={item.album.images[0].url} trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1].name ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2].name ? item.artists[2].name : null} />
+        }
+        else if (response == result.playlists) {
+            return <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
+        }
+        else if (response == result.artists) {
+            return <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} Icon={item.popularity > 55 ? 'verified' : null} />
+
+        }
+        else {
+            return (
+                <View style={{ width: '100%' }}>
+                    <Text style={{ color: 'white' }}> Case not working </Text>
+                </View>
+            )
+        }
+    }
+
     useEffect(() => {
         SearchApiCall(value);
     }, [value])
@@ -138,22 +160,12 @@ const MainSearchScreenComp = ({ album }) => {
             <FlatList
                 style={{ flex: 0 }}
                 data={response.items}
-                keyExtractor={item => item.id}
-                initialNumToRender={50}
-                renderItem={({ item }) => {
-                    return (
+                numColumns={2}
+                key={'_'}
+                keyExtractor={item => "_" + item.id}
+                renderItem={RenderItemFunction}
 
-                        /*
-                        <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name} />
-                        <ArtistComp image={item.images[0] && item.images[0].url ? item.images[0].url : null} artistName={item.name} />
-                        <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
-                        
-                        */
-                            <SearchComps image={item.album.images[0].url} trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1].name ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2].name ? item.artists[2].name : null} />
-                    )
-                }}
             />
-
 
         </View>
     )
