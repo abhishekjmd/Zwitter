@@ -6,7 +6,7 @@ import RecentlyPlayed from '../AllweatherComps/RecentlyPlayed'
 import ShowsPodcast from './ShowsPodcast'
 import SmallPlayer from '../AllweatherComps/MusicPlayerComponent/SmallPlayer'
 const Index = () => {
-    
+
     const onlikePressed = () => {
 
     }
@@ -33,3 +33,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 })
+
+

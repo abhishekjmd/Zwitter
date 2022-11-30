@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, FlatList, Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
-
-const BrowseCardComp = ({ text, image,onPress }) => {
+import { useSelector } from 'react-redux'
+const BrowseCardComp = ({ text, image, onPress }) => {
     return (
         <TouchableOpacity style={styles.mainContainer} onPress={onPress}>
             <View style={styles.main}>
@@ -14,11 +14,15 @@ const BrowseCardComp = ({ text, image,onPress }) => {
 
 const BrowseComponent = () => {
     const [response, setResponse] = useState('')
+    const { token } = useSelector((state) => {
+        return state
+    });
     const BrowseApi = async () => {
         const endpointUrl = 'https://api.spotify.com/v1/browse/categories?limit=50';
+        console.log('Browser AccessToken:', token)
         const res = await fetch(endpointUrl, {
             headers:
-                { 'Authorization': 'Bearer ' + 'BQBBqe6Jl4JNU0ZezBwMobz36sXmLgFsvJ1eTW4TGsDztTB87GpeGWrYMgsSx_YvEfpNBaebFTjVHAu3rAB46KhWyL319wpmGdWhOcK_kzIFa73vsfVF4Kg1Ep0MPREI_GzHEvUOfcMI1oBZW9qjfeoAPsaW805jWOkiRgLHZ91q4i2ZXD4wJEhMoOsNuJX443-lnS-8cNNIHSnFvNJQSbbRKHHtyrB-whyPm4RJJyKvwQbczzv_ntTTSgscWJfnlVzkXqDqENrP6Q' },
+                { 'Authorization': 'Bearer '  + token },
             json: true
         })
         const result = await res.json();
@@ -36,7 +40,7 @@ const BrowseComponent = () => {
                 keyExtractor={item => "_" + item.id}
                 renderItem={({ item, index }) => {
                     return (
-                        <BrowseCardComp text={item.name} image={ item.icons[0].url} onPress={()=>console.log(item.name+" Pressed")} />
+                        <BrowseCardComp text={item.name} image={item.icons[0].url} onPress={() => console.log(item.name + " Pressed")} />
                     )
                 }}
                 numColumns={2}

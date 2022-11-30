@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import Video from 'react-native-video'
-
+// import Video from 'react-native-video'
+import { useSelector } from 'react-redux'
 // ---------------- IMPORTED COMPONENTS ----------
 import TopComponent from './TopComponents'
 import MusicList from './MusicList'
@@ -22,19 +22,20 @@ const Index = () => {
   const PlayListName = route.params.PlaylistName;
   const CreatorImage = route.params.OwnerImage
   const [pause, setPause] = useState(false)
+  const {token} = useSelector((state)=>{return state})
   const OnPlay = () => {
     setPause(false)
   }
-  
-  const OnPause = () => {
-    setPause(true)
-  }
+
+  // const OnPause = () => {
+    // setPause(true)
+  // }
   const Apicall = async () => {
     const endpointUrl = `https://api.spotify.com/v1/playlists/${dataId}/tracks`;
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQBSYlH4EBapSaCrN05u1OAs75tJguz2uYO15u27r5OMofJqpEQ_S-TGZZ58sUHGAl6LRNEAbX190dLkk07sn5RAo12guiZMyTAVuJ2xBGqCghbegHO_wW3hPyuCr_DOkGxqXTm7F6RHqz6BShVDbqnObvHJheqYH_0n1ijgj5u6pHqNc9iulMkArlKMiwGhKkBLdaUe_bIjdk8Vbu7afe1X_0_2CNcfyyBJ-vxwQBqHH6UjZnvgsUsQcAz7aeOwLjNJUf0syoqvpg' },
+          { 'Authorization': 'Bearer ' + token },
         json: true
       })
       const result = await res.json();
@@ -64,7 +65,7 @@ const Index = () => {
                   setMusicImg(item.track.album.images[0].url);
                   setMusicUrl(item.track.preview_url)
                   setDuration(item.track.duration_ms)
-                  // console.log(setDuration);
+                  console.log(setDuration);
                 }}
               />
             </View>
@@ -76,14 +77,14 @@ const Index = () => {
           (
             <>
               <SmallPlayer {...{ pause, OnPlay, OnPause }} MusicImg={musicImg} />
-              <Video
-                source={{ uri: musicUrl }}
-                poster={musicImg}
-                audioOnly
-                paused={pause}
-                onProgress={{
+              // <Video
+                // source={{ uri: musicUrl }}
+                // poster={musicImg}
+                // audioOnly
+                // paused={pause}
+                // onProgress={{
 
-                }}
+                // }}
 
               />
             </>

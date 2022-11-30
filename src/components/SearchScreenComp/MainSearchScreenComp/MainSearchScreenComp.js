@@ -2,30 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, TextInput, FlatList, Image, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import { API_TOKEN } from '@env'
 import SwipeComp from './SwipeComp'
 import styles from './Styles'
 import { AlbumsComps, ArtistComp, PlaylistComp, SearchComps } from './SubSearchComps';
+import { useSelector } from 'react-redux'
 
 
 // ----------------- SEARCH BAR COMPONENT ------------
-const SearchBarComp = ({ onEndEditing, value, onChangeText }) => {
+const SearchBarComp = ({ onSubmitEditing, value, onChangeText }) => {
     // const [term, setTerm] = useState('');
     return (
         <View style={styles.MainContainer}>
             <View style={styles.SearchContainer}>
                 <AntDesign name='arrowleft' size={30} style={styles.Icon} />
-                <TextInput placeholder='What do you want to listen to?' style={styles.textInput} value={value} onChangeText={onChangeText} placeholderTextColor='#d5ded7' onEndEditing={onEndEditing} />
+                <TextInput placeholder='What do you want to listen to?' style={styles.textInput} value={value} onChangeText={onChangeText} placeholderTextColor='#d5ded7' onSubmitEditing={onSubmitEditing} />
                 <Ionicons name='md-camera-outline' size={30} style={styles.Icon} />
             </View>
         </View>
     )
 }
-
-// ----------- CONDITIONAL RESULT COMPONENT ----------
-
-
-
 
 
 const MainSearchScreenComp = ({ album }) => {
@@ -37,22 +33,29 @@ const MainSearchScreenComp = ({ album }) => {
     const [result, setResult] = useState('');
 
     //-------------- ONPRESS FUNCTIONS ---------------
-    const OnSongsPressed = () => { setType('track'); }
-    const OnPlaylistsPressed = () => { setType('playlist'); }
+    const OnSongsPressed = (e) => {
+        setType('track');
+    }
+    const OnPlaylistsPressed = (e) => {
+        setType('playlist');
+    }
     const OnAlbumsPressed = () => { setType('album'); }
     const OnArtistPressed = () => { setType('artist'); }
     const OnPodcastShowsPressed = () => { setType('show'); }
     const OnProfilesPressed = () => { setType(album); }
     const OnGenreMoodsPrssed = () => { setType(album); }
 
-
+  
     //------------- APICALL FUNCTION ----------------
+    const { token } = useSelector((state) => {
+        return state
+    });
     const SearchApiCall = async () => {
         const endpointUrl = `https://api.spotify.com/v1/search?q=${value}&type=${type}&market=IN&limit=50`;
         try {
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + 'BQDiFAlJAAaT3x7g7lgETnfFRZbSNKc_Ef8uAa8TzUJ9k9I0jSE-1n9X9ZQOteHMSAMJmqNPT9lopYU6EjGhyhQDvcagJgoruGUnMjVSzuT7YZHtuWriX0jAbnsp_N_ZUW1yN_gaI7acDtwjRNfGx_fPP8UvHpzr26B2Urk6xkTeQmIqf_JUz8EzivV044SSmb2Z9XahMGwH9aGc7HzMYI_bsTJxPIUYTNECDPTCC5Sbz7XsQobpgOLVbpWG6EQ9LZF-fj6j5jwx-Q' },
+                    { 'Authorization': 'Bearer ' + token },
                 json: true
             })
             const apiResult = await res.json();
@@ -123,6 +126,9 @@ const MainSearchScreenComp = ({ album }) => {
         }
     }
 
+
+
+    // ----------- CONDITIONAL RESULT COMPONENT ----------
     const RenderItemFunction = ({ item }) => {
         if (response == result.albums) {
             return <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date} />
@@ -152,8 +158,8 @@ const MainSearchScreenComp = ({ album }) => {
         <View>
             <SearchBarComp
                 value={value}
-                onChangeText={(e => setValue(e))}
-                onEndEditing={(e) => { setValue(e) }}
+                onChangeText={(e) => { setValue(e) }}
+                onSubmitEditing={(e) => setValue(e)}
             />
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
 
@@ -164,7 +170,6 @@ const MainSearchScreenComp = ({ album }) => {
                 key={'_'}
                 keyExtractor={item => "_" + item.id}
                 renderItem={RenderItemFunction}
-
             />
 
         </View>

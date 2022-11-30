@@ -16,36 +16,54 @@ import Premium from '../../screens/Premium/Premium';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
+const config = {
+    screens: {
+        Home: "H",
+        Search: "S",
+        Library: "L",
+    }
+}
 
 const Index = () => {
-    const linking = {
-        prefixes: ["http://192.168.0.106:4000"],
-    };
+
+
     return (
-        <NavigationContainer linking={linking}>
+        <NavigationContainer
+            linking={{
+                prefixes: ["myapp://app"],
+                config
+            }}>
             <Tab.Navigator screenOptions={
+
                 {
                     headerShown: false,
                     tabBarStyle: {
-                        backgroundColor: 'black',
-                        justifyContent:'center',
-                        alignItems:'center',
-                        height:60,
-                        opacity:0.5  
-                    },
-                    tabBarLabelStyle:{
-                        color:'white',
-                        fontSize:13,
+                        // backgroundColor: 'black',
                         justifyContent: 'center',
                         alignItems: 'center',
-                    }
+                        height: 60,
+                        opacity: 1,
+                        backgroundColor: 'transparent',
+                        // borderTopWidth: 0,
+                        position: 'absolute',
+                        elevation: 0.6,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                    },
+                    tabBarLabelStyle: {
+                        color: 'white',
+                        fontSize: 13,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    },
+
                 }}>
                 <Tab.Screen name='Home' component={HomeStackNavigation}
                     options=
                     {{
                         'tabBarIcon': (() => (
                             <Entypo name='home' size={33} color='#ffffff' />
-                            
                         )),
                     }}
                 />
@@ -59,6 +77,7 @@ const Index = () => {
                                 <Ionicons name='search' size={33} color='#ffffff' />
                             </View>
                         )),
+                        'tabBarHideOnKeyboard': true
                     }}
                 />
                 <Tab.Screen
@@ -88,6 +107,6 @@ const Index = () => {
             </Tab.Navigator>
         </NavigationContainer>
     )
-}
 
+}
 export default Index 

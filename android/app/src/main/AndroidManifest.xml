@@ -26,7 +26,8 @@
          <category android:name="android.intent.category.DEFAULT" />
          <category android:name="android.intent.category.BROWSABLE" />
         <!-- Accepts URIs that begin with "example://gizmos” -->
-        <data android:scheme="app" android:host="deeplink" />
+        <!-- <data android:scheme="app" android:host="deeplink" /> -->
+  <data android:scheme="com.app.auth" android:host="deeplinking" />
       </intent-filter>
       </activity>
     </application>

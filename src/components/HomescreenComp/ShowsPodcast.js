@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import { Podcast } from '../../assets/PodcastData'
+import { useDispatch, useSelector } from 'react-redux'
+import { AlbumsComps } from '../SearchScreenComp/MainSearchScreenComp/SubSearchComps'
 
 const CreateShowComp = props => {
     return (
@@ -12,7 +14,7 @@ const CreateShowComp = props => {
                 <View style={styles.TextContainer}>
                     <Text style={styles.Firsttext}> {props.Firsttext} </Text>
                     <Text style={styles.Secondtext}> {props.Secondtext} </Text>
-                    <Text  style={styles.Thirdtext}> {props.Thirdtext && props.Thirdtext.length > 60 ? props.Thirdtext.slice(0,45)+'...': props.Thirdtext } </Text>
+                    <Text style={styles.Thirdtext}> {props.Thirdtext && props.Thirdtext.length > 60 ? props.Thirdtext.slice(0, 45) + '...' : props.Thirdtext} </Text>
                 </View>
             </View>
         </View>
@@ -20,21 +22,35 @@ const CreateShowComp = props => {
 }
 
 const ShowsPodcast = () => {
+    const { token } = useSelector((state) => {
+        return state
+    });
+    const [response,setResponse] = useState('')
+    const RecentShowsApi = async () => {
+        const id = '"5lMNphVhMLvhFmTWiKiLA2"';
+        const endpointUrl = `https://api.spotify.com/v1/browse/new-releases`;
+        try {
+            const res = await fetch(endpointUrl, {
+                headers:
+                    { 'Authorization': 'Bearer ' + token },
+                json: true
+            })
+            const result = await res.json();
+            console.log(result);
+            console.log(result.albums);
+            setResponse(result.albums);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        RecentShowsApi();
+    }, [])
     return (
-        <View>
+        <View style={{backgroundColor:'black',width:'100%',height:200}}>
             <View style={styles.topContainer}>
-                <Text style={styles.topContainertext}> Your shows </Text>
-            </View>
-            <FlatList
-                data={Podcast}
-                keyExtractor={item=>item.Genre}
-                numColumns={2}
-                renderItem={({ item }) => {
-                    return (
-                        <CreateShowComp ImageField={item.Image} Firsttext={item.Genre} Secondtext={item.Publisher} Thirdtext={item.Description} />
-                    )
-                }}
-            />
+                <Text style={styles.topContainertext}> Popular New releases </Text>
+            </View>   
         </View>
     )
 }
@@ -46,8 +62,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginLeft: 15,
     },
-    subRoot:{
-        width:'100%',
+    subRoot: {
+        width: '100%',
         // backgroundColor:'blue',
         // marginLeft:10,
     },

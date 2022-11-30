@@ -2,6 +2,9 @@ import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
+// import { API_TOKEN } from '@env'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchToken } from '../../../Redux/Reducers/TokenReducer'
 export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPressed }) => {
   return (
     <Pressable style={styles.root} onPress={OnPlaylistPressed}>
@@ -22,13 +25,18 @@ export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPres
 const MainRenderComponent = () => {
   const [response, setResponse] = useState('')
   const navigation = useNavigation();
+  
+
+   const {token} =  useSelector((state)=>{
+     return state
+   });
   const spotifyPlaylists = async () => {
     const endpointUrl = "https://api.spotify.com/v1/me/playlists";
-
+    console.log(token);
     try {
       const res = await fetch(endpointUrl, {
         headers:
-          { 'Authorization': 'Bearer ' + 'BQBSYlH4EBapSaCrN05u1OAs75tJguz2uYO15u27r5OMofJqpEQ_S-TGZZ58sUHGAl6LRNEAbX190dLkk07sn5RAo12guiZMyTAVuJ2xBGqCghbegHO_wW3hPyuCr_DOkGxqXTm7F6RHqz6BShVDbqnObvHJheqYH_0n1ijgj5u6pHqNc9iulMkArlKMiwGhKkBLdaUe_bIjdk8Vbu7afe1X_0_2CNcfyyBJ-vxwQBqHH6UjZnvgsUsQcAz7aeOwLjNJUf0syoqvpg' },
+          { 'Authorization': 'Bearer ' + token },
         json: true
       })
       const result = await res.json();
@@ -54,7 +62,7 @@ const MainRenderComponent = () => {
                 image={item.images[0].url}
                 OnPlaylistPressed={() => {
                   console.warn(item.id)
-                  navigation.navigate('MusicList', { TracksId: item.id, Owner: item.owner.display_name, Images: item.images[0].url, PlaylistName: item.name, OwnerImage: item.owner.uri  })
+                  navigation.navigate('MusicList', { TracksId: item.id, Owner: item.owner.display_name, Images: item.images[0].url, PlaylistName: item.name, OwnerImage: item.owner.uri })
                 }}
               />
             </View>

@@ -28,9 +28,9 @@ export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOn
                 <Image source={{ uri: image }} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.firstText}> {albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
+                <Text style={styles.firstText}> {albumName && albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
                 <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
-                <Text style={styles.thirdText}> {albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
+                <Text style={styles.thirdText}> {albumType && albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
             </View>
         </View>
     )
