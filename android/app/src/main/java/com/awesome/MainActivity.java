@@ -1,4 +1,4 @@
-package com.zwitter;
+package com.awesome;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -12,12 +12,12 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Zwitter";
+    return "awesome";
   }
   @Override
- protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(null);
- }
+  }
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. There the RootView is created and
