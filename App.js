@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
 import TabNavigation from './src/navigation/TabNavigation/Index'
 import { Provider, useDispatch } from 'react-redux'
-import store from './src/Redux/Store';
 import { fetchToken } from './src/Redux/Reducers/TokenReducer';
+import store from './src/Redux/Store';
 
 
 const App = () => {
@@ -37,6 +37,5 @@ export default App;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor:'black'
   }
 })

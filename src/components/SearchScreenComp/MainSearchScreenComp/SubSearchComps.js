@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,7 +11,7 @@ export const SearchComps = ({ image, trackName, Artist, ArtistTwo, ArtistThree }
                 </View>
                 <View style={styles.TextContainer}>
                     <Text style={styles.SearchText}> {trackName} </Text>
-                    <Text style={styles.SearchTexttTwo}> {Artist}, {ArtistTwo}, {ArtistThree} 
+                    <Text style={styles.SearchTexttTwo}> {Artist}, {ArtistTwo}, {ArtistThree}
                     </Text>
                 </View>
             </View>
@@ -21,9 +21,9 @@ export const SearchComps = ({ image, trackName, Artist, ArtistTwo, ArtistThree }
 }
 
 
-export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne, albumType, releaseYear }) => {
+export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne, albumType, releaseYear, onAlbumCompPressed }) => {
     return (
-        <View style={styles.root}>
+        <Pressable style={styles.root} onPress={onAlbumCompPressed} >
             <View style={styles.imageContainer}>
                 <Image source={{ uri: image }} style={styles.image} />
             </View>
@@ -32,11 +32,11 @@ export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOn
                 <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
                 <Text style={styles.thirdText}> {albumType && albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
-export const ArtistComp = ({ image, artistName ,Icon }) => {
+export const ArtistComp = ({ image, artistName, Icon }) => {
     return (
         <View style={styles.MainArtistContainer}>
             <View style={styles.ArtistImageContainer}>
@@ -50,16 +50,16 @@ export const ArtistComp = ({ image, artistName ,Icon }) => {
     )
 }
 
-export const PlaylistComp = ({ playlistName, image }) => {
+export const PlaylistComp = ({ playlistName, image, onPlaylistCompPressed }) => {
     return (
-        <View style={styles.PlaylistMainContainer}>
+        <Pressable style={styles.PlaylistMainContainer} onPress={onPlaylistCompPressed} >
             <View style={styles.PlaylistImageContainer}>
                 <Image source={{ uri: image }} style={styles.PlaylistImage} />
             </View>
             <View style={styles.PlaylistTextContainer}>
                 <Text style={styles.PlaylistText}> {playlistName.length > 25 ? playlistName.slice(0, 25) + '...' : playlistName} </Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
@@ -103,38 +103,40 @@ const styles = StyleSheet.create({
     },
     SearchTexttTwo: {
         color: '#cacfcc',
-        fontWeight:'500'
+        fontWeight: '500'
     },
     root: {
         width: '48%',
         height: 250,
         // backgroundColor: 'green',
-        margin: '1.5%'
+        margin: '1.5%',
+        marginBottom:10,
     },
     imageContainer: {
         width: '100%',
-        height: '70%'
+        height: '65%',
+        alignItems:'center',
+      
     },
     image: {
-        width: '100%',
+        width: '95%',
         height: '100%'
     },
     textContainer: {
         width: '100%',
         marginTop: '4%',
         height: '26%',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     firstText: {
         color: 'white',
         fontWeight: '500',
-        fontSize: 17,
+        fontSize: 15,
     },
     secondText: {
         color: '#d7d8db',
         fontWeight: '500',
-        fontSize: 16,
-
+        // fontSize: 16,
 
     },
     thirdText: {

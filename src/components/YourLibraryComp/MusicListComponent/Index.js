@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 // import Video from 'react-native-video'
 import { useSelector } from 'react-redux'
 // ---------------- IMPORTED COMPONENTS ----------
-import TopComponent from './TopComponents'
+import MusicListTopComponents from './MusicListTopComponents'
 import MusicList from './MusicList'
 import SmallPlayer from '../../AllweatherComps/MusicPlayerComponent/SmallPlayer'
 
@@ -50,7 +50,7 @@ const Index = () => {
   }, [])
   return (
     <View style={styles.root}>
-      <TopComponent PlaylistName={PlayListName} Images={CoverImage} Creator={Display_Name} CreatorImage={CreatorImage} />
+      <MusicListTopComponents PlaylistName={PlayListName} Images={CoverImage} Creator={Display_Name} CreatorImage={CreatorImage} />
       <FlatList
         data={albumData.items}
         renderItem={({ item }) => {
