@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   FirstText: {
     fontWeight: '600',
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
   },
   SecondContainer: {
     flexDirection: 'row',
@@ -73,6 +73,5 @@ const styles = StyleSheet.create({
   },
   LastText: {
     color: '#d3dbd5',
-    fontSize: 16
   },
 })

@@ -8,6 +8,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import BrowseSearchScreen from '../../../screens/SearchScreen/BrowseSearchScreen/Index'
 import MainSearchScreen from '../../../screens/SearchScreen/MainSearchScreen/MainSearchScreen'
 import AlbumSearchResultScreen from '../../../screens/SearchScreen/SearchResultScreen/AlbumSearchResultScreen';
+import PlaylistSearchResultScreen from '../../../screens/SearchScreen/SearchResultScreen/PlaylistSearchResultScreen';
 
 const Index = ({ navigation, route }) => {
   return (
@@ -15,6 +16,7 @@ const Index = ({ navigation, route }) => {
       <Stack.Screen name='BrowseSearch' component={BrowseSearchScreen} />
       <Stack.Screen name='MainSearch' component={MainSearchScreen} />
       <Stack.Screen name='AlbumSearchResult' component={AlbumSearchResultScreen} />
+      <Stack.Screen name='PlaylistSearchResult' component={PlaylistSearchResultScreen} />
     </Stack.Navigator>
   )
 }

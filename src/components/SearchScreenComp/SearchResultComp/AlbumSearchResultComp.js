@@ -38,7 +38,7 @@ const AlbumSearchResultComp = () => {
     try {
       const endPointUrl = `https://api.spotify.com/v1/albums/${AlbumsId}/tracks`
       const res = await fetch(endPointUrl, {
-        headers: {
+        'headers': {
           'Authorization': 'Bearer ' + token
         },
         json: true

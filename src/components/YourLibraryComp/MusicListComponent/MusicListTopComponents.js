@@ -4,12 +4,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const MusicListTopComponents = ({  PlaylistName, Images, Creator, CreatorImage }) => {
+const MusicListTopComponents = ({ PlaylistName, Images, Creator, CreatorImage, Duration, LikesCount }) => {
   return (
     <View style={styles.root}>
-          <View style={styles.ImageContainer}>
-            <Image source={{ uri: Images }} style={styles.Image} />
-          </View>
+      <View style={styles.ImageContainer}>
+        <Image source={{ uri: Images }} style={styles.Image} />
+      </View>
       <View style={styles.MainTextContainer}>
         <Text style={styles.Playlist}>{PlaylistName} </Text>
         <View style={styles.CreatorContainer}>
@@ -18,7 +18,7 @@ const MusicListTopComponents = ({  PlaylistName, Images, Creator, CreatorImage }
         </View>
         <View style={styles.TimeContainer}>
           <MaterialCommunityIcons name='web' size={20} color='grey' />
-          <Text style={styles.TimeContainerText}>28 likes . 4h 5min </Text>
+          <Text style={styles.TimeContainerText}> {LikesCount} likes . {Duration} </Text>
         </View>
         <View style={styles.shuffleContainer}>
           <View style={styles.likeShuffle}>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '55%',    
+    height: '55%',
   },
   Image: {
     width: '50%',
