@@ -1,51 +1,38 @@
 import { StyleSheet, View, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import TopBar from './TopBar'
-import SwipeToggle from '../AllweatherComps/SwipeToggle'
-import RecentlyPlayed from '../AllweatherComps/RecentlyPlayed'
-import ShowsPodcast from './ShowsPodcast'
-import SmallPlayer from '../AllweatherComps/MusicPlayerComponent/SmallPlayer'
+import RecentlyPlayed from './RecentlyPlayed'
 import { useSelector } from 'react-redux'
-
+import BiggestHits from './BiggestHits'
+import FavouriteArtist from './FavouriteArtist'
 const Index = () => {
     const { token } = useSelector((state) => {
         return state
     });
-    const apiCalling = async () => {
-        const artistId = '4YRxDV8wJFPHPTeXepOstw'
-        const endpointUrl = "https://api.spotify.com/v1/recommendations?limit=10&market=ES&seed_artists=4YRxDV8wJFPHPTeXepOstw"
-        const res = await fetch(endpointUrl, {
-            headers: { 'Authorization': 'Bearer ' + token, },
-            json: true
-        })
-        const result = await res.json();
-        console.log(result);
-    }
-    useEffect(() => {
-        apiCalling()
-    }, [])
-
     return (
-        <View style={styles.root}>
+        <ScrollView style={styles.root}>
             <TopBar />
-            <ScrollView style={styles.sub} horizontal={true} showsHorizontalScrollIndicator={false}>
-                <SwipeToggle text='music' />
-                <SwipeToggle text='Podcast & shows' />
-                <SwipeToggle text='Podcast & shows' />
-            </ScrollView>
+            <BiggestHits />
             <RecentlyPlayed />
-            <ShowsPodcast />
-        </View>
+            <FavouriteArtist />
+        </ScrollView>
     )
 }
 
 export default Index
 
 const styles = StyleSheet.create({
+    root: {
+        // flex: 1,
+        backgroundColor: 'black'
+    },
     sub: {
+        height: 100,
+        width: '100%',
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10,
+        backgroundColor: 'black'
     },
 })
 

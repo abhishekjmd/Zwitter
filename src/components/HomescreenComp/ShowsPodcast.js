@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Podcast } from '../../assets/PodcastData'
 import { useDispatch, useSelector } from 'react-redux'
 import { AlbumsComps } from '../SearchScreenComp/MainSearchScreenComp/SubSearchComps'
@@ -25,10 +25,9 @@ const ShowsPodcast = () => {
     const { token } = useSelector((state) => {
         return state
     });
-    const [response,setResponse] = useState('')
+    const [response, setResponse] = useState('')
     const RecentShowsApi = async () => {
-        const id = '"5lMNphVhMLvhFmTWiKiLA2"';
-        const endpointUrl = `https://api.spotify.com/v1/browse/new-releases`;
+        const endpointUrl = `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=5`;
         try {
             const res = await fetch(endpointUrl, {
                 headers:
@@ -37,8 +36,8 @@ const ShowsPodcast = () => {
             })
             const result = await res.json();
             console.log(result);
-            console.log(result.albums);
-            setResponse(result.albums);
+            console.log('top artist')
+
         } catch (error) {
             console.log(error)
         }
@@ -47,10 +46,10 @@ const ShowsPodcast = () => {
         RecentShowsApi();
     }, [])
     return (
-        <View style={{backgroundColor:'black',width:'100%',height:200}}>
+        <View style={{ backgroundColor: 'black', width: '100%', height: 200 }}>
             <View style={styles.topContainer}>
                 <Text style={styles.topContainertext}> Popular New releases </Text>
-            </View>   
+            </View>
         </View>
     )
 }

@@ -15,11 +15,13 @@ export default SwipeToggle
 
 const styles = StyleSheet.create({    
     container: {
+        height:50,
         padding: 13,
         borderWidth: 1,
         backgroundColor: '#545659',
         borderRadius: 14,
         marginLeft: 10,
+        width:80,
         // justifyContent:'center',
         // alignItems:'center',
     },
@@ -36,7 +38,6 @@ const styles = StyleSheet.create({
     text_Primary:{
         textTransform: 'capitalize',
         fontSize:17,
-
     },
     
 })

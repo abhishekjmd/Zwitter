@@ -6,14 +6,16 @@ import styles from './Styles'
 // -------------------IMPORTING ICONS----------
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
+import { useNavigation } from '@react-navigation/native'
 
 
 // --------------- TOP MOST COMPONENT--------- 
 const FirstTopComponent = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.root}>
             <View style={styles.fstcontainer}>
-                <TouchableOpacity style={styles.textcontainer}>
+                <TouchableOpacity style={styles.textcontainer} onPress={() => { navigation.navigate('Profile') }}>
                     <Text style={styles.text}>A</Text>
                 </TouchableOpacity>
                 <Text style={styles.text2}>Your Library</Text>
