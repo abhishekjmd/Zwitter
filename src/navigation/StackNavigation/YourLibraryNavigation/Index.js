@@ -1,14 +1,14 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
 
 // --------------- IMPORTING SCREEN -----------------
 import MainLibraryScreen from '../../../screens/Your Library/MainLibraryScreen/Index';
 import MusicList from '../../../components/YourLibraryComp/MusicListComponent/Index';
 import ProfileScreen from '../../../screens/ProfileScreen/ProfileScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Navigation = () => {
-
     return (
         <Stack.Navigator
             screenOptions={{

@@ -38,13 +38,13 @@ const Index = () => {
                 {
                     headerShown: false,
                     tabBarStyle: {
-                        // backgroundColor: 'black',
+                        backgroundColor: 'black',
                         justifyContent: 'center',
                         alignItems: 'center',
                         height: 60,
                         opacity: 1,
                         backgroundColor: 'transparent',
-                        // borderTopWidth: 0,
+                        borderTopWidth: 0,
                         position: 'absolute',
                         elevation: 0.6,
                         left: 0,

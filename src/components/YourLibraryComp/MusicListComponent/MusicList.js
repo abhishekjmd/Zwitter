@@ -47,8 +47,11 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   MainTextContainer: {
-    justifyContent: 'center',
-    marginLeft:8
+    // justifyContent: 'center',
+    marginLeft:8,
+    // backgroundColor:'green',
+    width:'70%',
+    height:'100%'
   },
   FirstText: {
     fontWeight: '600',
@@ -58,7 +61,8 @@ const styles = StyleSheet.create({
   SecondContainer: {
     flexDirection: 'row',
     marginLeft:5,
-    width:'100%',
+    width:'80%',
+    // backgroundColor:'blue'
   },
   LyricsTextContainer: {
     backgroundColor: '#d3dbd5',
@@ -66,10 +70,13 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flexDirection: 'row',
     borderRadius: 3,
-    width: '30%',
+    width: '22%',
+    marginRight:5,
   },
   LyricsText: {
-    fontWeight:'600'
+    fontWeight:'600',
+    color:'black',
+    fontSize:10
   },
   LastText: {
     color: '#d3dbd5',

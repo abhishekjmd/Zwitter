@@ -59,6 +59,7 @@ const BiggestHits = () => {
                         <FlatList
                             horizontal
                             data={response.items}
+                            showsHorizontalScrollIndicator={false}
                             renderItem={({ item }) => {
                                 return (
                                     <View>
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 180,
         height: 200,
-        marginLeft: 5
+        marginLeft: 5,
+        // backgroundColor:'blue'
     },
     PlaylistImageContainer: {
         height: '75%',
@@ -102,17 +104,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: '20%',
         width: '85%',
-        alignItems: 'center',
+        // alignItems: 'center',
         // backgroundColor:'blue'
     },
     PlaylistText: {
         fontWeight: '500',
         color: 'white',
-        fontSize: 18,
+        // fontSize: 18,
     },
     biggesthitsContainer: {
         // backgroundColor:'blue',
-        padding: 10
+        padding: 20
     },
     biggesthitsText: {
         color: 'white',

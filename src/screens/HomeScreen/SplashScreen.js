@@ -7,11 +7,10 @@ const SplashScreen = () => {
     const navigation = useNavigation();
     setTimeout(() => {
         navigation.navigate('home')
-    }, 6500)
+    }, 12000)
     return (
         <View style={styles.root}>
-            <Fontisto name='spotify' size={65} color='#2bed5f' />
-            <Text>SplashScreen</Text>
+            <Fontisto name='spotify' size={190} color='#2bed5f' />
         </View>
     )
 }

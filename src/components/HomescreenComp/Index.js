@@ -5,16 +5,17 @@ import RecentlyPlayed from './RecentlyPlayed'
 import { useSelector } from 'react-redux'
 import BiggestHits from './BiggestHits'
 import FavouriteArtist from './FavouriteArtist'
+import NewReleases from './NewReleases'
+import RecentlyPlaylistPlayed from './RecentlyPlaylistPlayed'
 const Index = () => {
-    const { token } = useSelector((state) => {
-        return state
-    });
-    return (
+        return (
         <ScrollView style={styles.root}>
             <TopBar />
+            <RecentlyPlaylistPlayed />
             <BiggestHits />
             <RecentlyPlayed />
             <FavouriteArtist />
+            <NewReleases />
         </ScrollView>
     )
 }

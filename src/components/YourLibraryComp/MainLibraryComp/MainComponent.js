@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   toptxt: {
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: '500',
     color: 'white',
 

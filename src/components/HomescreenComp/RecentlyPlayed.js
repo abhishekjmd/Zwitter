@@ -31,12 +31,16 @@ const RecentlyPlayed = () => {
         json: true
       })
       const result = await res.json();
-      setResponse(result);
-      console.log(result);
+      const finalResult = result.items;
+      const updateArr = new Set(finalResult.map((item) => { item.track.album.images[0] }));
+      // const lastUpdate = json.stringify();
+      setResponse(finalResult);
+      console.log(updateArr);
     } catch (error) {
       console.log(error)
     }
   }
+
   useEffect(() => {
     RecentlyPlayedApi();
   }, [])
@@ -45,13 +49,18 @@ const RecentlyPlayed = () => {
       <View style={styles.RecentlyPlayedContainer}>
         <Text style={styles.RecentlyPlayedText}> Recently Played</Text>
       </View>
-
       <FlatList
         horizontal
-        data={response.items}
+        data={response}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
-            <RecentPlayedComp image={item.track.album.images[0].url} TrackName={item.track.name} />
+            <View>
+              <RecentPlayedComp
+                image={item}
+              // TrackName={item.track.name}
+              />
+            </View>
           )
         }}
       />
@@ -65,10 +74,10 @@ const styles = StyleSheet.create({
   root: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 180,
-    height: 200,
+    width: 140,
+    height: 170,
     marginLeft: 5,
-    backgroundColor:'black'
+    // backgroundColor:'blue'
   },
   imageContainer: {
     height: '75%',
@@ -80,18 +89,16 @@ const styles = StyleSheet.create({
   },
   trackContainer: {
     justifyContent: 'center',
-    height: '20%',
-    width: '85%',
-    alignItems: 'center',
+    height: '25%',
+    width: '90%',
   },
-  track:{
+  track: {
     fontWeight: '500',
     color: 'white',
-    fontSize: 18,
   },
   RecentlyPlayedContainer: {
-    backgroundColor:'black',
-    padding: 10
+    backgroundColor: 'black',
+    padding: 20
   },
   RecentlyPlayedText: {
     color: 'white',

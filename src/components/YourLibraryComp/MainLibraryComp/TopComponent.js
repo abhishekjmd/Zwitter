@@ -45,6 +45,7 @@ export const SwipableRenderComponent = () => {
             <FlatList
                 data={SwipableComponent}
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
                 renderItem={() => {
                     return (
                         <View style={{ flexDirection: 'row' }}>
@@ -97,7 +98,7 @@ const Styles = StyleSheet.create({
 
     },
     swipeText: {
-        fontSize: 20,
+        fontSize: 16,
         color: 'white'
     },
 

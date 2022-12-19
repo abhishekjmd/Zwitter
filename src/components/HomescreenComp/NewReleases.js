@@ -1,56 +1,55 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Pressable, FlatList,Image } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-const FavouriteArtistComp = ({ image, ArtistName }) => {
+const NewReleasesComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
-        <View style={styles.root}>
+        <Pressable style={styles.root} onPress={onPlaylistCompPressed} >
             <View style={styles.imageContainer}>
                 <Image source={{ uri: image }} style={styles.image} />
             </View>
-            <View style={styles.artistNameContainer}>
-                <Text style={styles.artistNameText}> {ArtistName} </Text>
+            <View style={styles.newReleaseContainer}>
+                <Text style={styles.newReleaseText}> {playlistName && playlistName.length > 25 ? playlistName.slice(0, 25) + '...' : playlistName} </Text>
             </View>
-        </View>
+        </Pressable>
+
     )
 }
-
-const FavouriteArtist = () => {
+const NewReleases = () => {
     const [response, setResponse] = useState('')
     const { token } = useSelector((state) => {
         return state
     })
-    const FavouriteArtistApi = async () => {
+    const NewReleaseApi = async () => {
         try {
-            const endpointUrl = `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=5`
-            const res = await fetch(endpointUrl, {
+            const endPointUrl = `https://api.spotify.com/v1/browse/new-releases?country=IN&limit=20`
+            const res = await fetch(endPointUrl, {
                 'headers': {
                     'Authorization': 'Bearer ' + token
                 },
                 json: true
             })
             const result = await res.json();
-            console.log(result);
-            setResponse(result);
+            console.log(result.albums);
+            setResponse(result.albums);
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
-        FavouriteArtistApi();
+        NewReleaseApi();
     }, [])
     return (
         <View>
-            <View style={styles.favoriteArtistContainer}>
-                <Text style={styles.favouriteArtistText}> Your favourite artists</Text>
+            <View style={styles.container}>
+                <Text style={styles.text}> Fresh Releases</Text>
             </View>
             <FlatList
                 horizontal
                 data={response.items}
-                showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
-                        <FavouriteArtistComp image={item.images[0].url} ArtistName={item.name} />
+                        <NewReleasesComp image={item.images[0].url} playlistName={item.name} />
                     )
                 }}
             />
@@ -58,7 +57,7 @@ const FavouriteArtist = () => {
     )
 }
 
-export default FavouriteArtist
+export default NewReleases
 
 const styles = StyleSheet.create({
     root: {
@@ -67,36 +66,32 @@ const styles = StyleSheet.create({
         width: 180,
         height: 200,
         marginLeft: 5,
-        // backgroundColor: 'blue'
+        // backgroundColor:'blue'
     },
     imageContainer: {
-        height: '70%',
-        width: '80%',
-        // borderRadius: 80,
-
+        height: '75%',
+        width: '90%',
     },
     image: {
-        width: '100%',
         height: '100%',
-        borderRadius: 85
+        width: '100%',
     },
-    artistNameContainer: {
+    newReleaseContainer: {
         justifyContent: 'center',
         height: '20%',
-        width: '85%',
+        width: '90%',
         alignItems: 'center',
-        
+        // backgroundColor:'green'
     },
-    artistNameText: {
+    newReleaseText: {
         fontWeight: '500',
         color: 'white',
         // fontSize: 18,
     },
-    favoriteArtistContainer: {
-        backgroundColor: 'black',
+    container: {
         padding: 20
     },
-    favouriteArtistText: {
+    text: {
         color: 'white',
         fontSize: 20,
         fontWeight: '600'
