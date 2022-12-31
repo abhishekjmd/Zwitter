@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, FlatList,Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, FlatList, Image} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -30,8 +30,9 @@ const NewReleases = () => {
                 json: true
             })
             const result = await res.json();
-            console.log(result.albums);
+            console.log(result.albums.items);
             setResponse(result.albums);
+            // setIsLoading(false);
         } catch (error) {
             console.log(error)
         }
@@ -60,6 +61,12 @@ const NewReleases = () => {
 export default NewReleases
 
 const styles = StyleSheet.create({
+    loader: {
+        minHeight: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     root: {
         justifyContent: 'center',
         alignItems: 'center',

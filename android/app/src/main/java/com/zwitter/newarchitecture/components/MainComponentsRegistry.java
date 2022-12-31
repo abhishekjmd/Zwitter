@@ -1,4 +1,4 @@
-package com.awesome.newarchitecture.components;
+package com.zwitter.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

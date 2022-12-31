@@ -1,13 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import Fontisto from 'react-native-vector-icons/Fontisto'
-import { useNavigation } from '@react-navigation/native'
 
 const SplashScreen = () => {
-    const navigation = useNavigation();
-    setTimeout(() => {
-        navigation.navigate('home')
-    }, 12000)
     return (
         <View style={styles.root}>
             <Fontisto name='spotify' size={190} color='#2bed5f' />

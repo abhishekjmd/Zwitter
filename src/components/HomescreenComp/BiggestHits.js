@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, Image, Pressable, FlatList, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { BigHitsPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
         <Pressable style={styles.PlaylistMainContainer} onPress={onPlaylistCompPressed} >
@@ -17,60 +18,41 @@ const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
 
 const BiggestHits = () => {
     const [response, setResponse] = useState('')
-    const [isLoading, setIsLoading] = useState(true)
-    const { token } = useSelector((state) => {
-        return state
-    })
-    
-    const RecentShowsApi = async () => {
-        const endPointUrl = `https://api.spotify.com/v1/browse/featured-playlists?country=IN&locale=en_IN`;
+    const dispatch = useDispatch();
+
+    // const { token, BigHits } = useSelector((state) => { return state })
+    const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
+    const data = async () => {
         try {
-            const res = await fetch(endPointUrl, {
-                'headers': {
-                    'Authorization': 'Bearer ' + token
-                },
-                json: true
-            })
-            const result = await res.json();
-            console.log(result.playlists);
-            setResponse(result.playlists)
-            setIsLoading(false);
+            const BigHitsfunction = await dispatch(BigHitsPlaylistAsync())
+            console.log('BigHitsData', BigHitsData.items);
+            setResponse(BigHitsData)
         } catch (error) {
             console.log(error)
         }
     }
+
     useEffect(() => {
-        RecentShowsApi();
+        data();
     }, [])
     return (
         <View style={{ backgroundColor: 'black' }}>
-            {isLoading
-                ?
-                <View style={styles.loader}>
-                    <ActivityIndicator size='large' color='green' />
-                </View>
-                :
-                (
-                    <View>
-                        <View style={styles.biggesthitsContainer}>
-                            <Text style={styles.biggesthitsText}> Today's biggest hits</Text>
-                        </View>
+            <View style={styles.biggesthitsContainer}>
+                <Text style={styles.biggesthitsText}> Today's biggest hits</Text>
+            </View>
 
-                        <FlatList
-                            horizontal
-                            data={response.items}
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={({ item }) => {
-                                return (
-                                    <View>
-                                        <BiggestHitsComp image={item.images[0].url} playlistName={item.name} />
-                                    </View>
-                                )
-                            }}
-                        />
-                    </View>
-                )
-            }
+            <FlatList
+                horizontal
+                data={BigHitsData.items}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                    return (
+                        <View>
+                            <BiggestHitsComp image={item.images[0].url} playlistName={item.name} />
+                        </View>
+                    )
+                }}
+            />
         </View>
     )
 }

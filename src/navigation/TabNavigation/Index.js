@@ -34,7 +34,6 @@ const Index = () => {
                 config
             }}>
             <Tab.Navigator screenOptions={
-
                 {
                     headerShown: false,
                     tabBarStyle: {

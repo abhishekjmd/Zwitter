@@ -8,14 +8,15 @@ import FavouriteArtist from './FavouriteArtist'
 import NewReleases from './NewReleases'
 import RecentlyPlaylistPlayed from './RecentlyPlaylistPlayed'
 const Index = () => {
-        return (
+    return (
         <ScrollView style={styles.root}>
             <TopBar />
-            <RecentlyPlaylistPlayed />
             <BiggestHits />
-            <RecentlyPlayed />
             <FavouriteArtist />
-            <NewReleases />
+            {/*
+            <RecentlyPlaylistPlayed />
+           // <RecentlyPlayed />
+        */}
         </ScrollView>
     )
 }

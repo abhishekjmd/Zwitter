@@ -5,18 +5,16 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-const SmallPlayer = ({ pause, OnPlay, OnPause, MusicImg }) => {
+const SmallPlayer = ({ pause, OnPlay, OnPause, MusicImg,MusicName,SingerName }) => {
     return (
-
-
         <View style={styles.root}>
             <View style={styles.MainContainer}>
                 <View style={styles.ImageContainer}>
                     <Image source={{ uri: MusicImg }} style={styles.Image} />
                 </View>
                 <View style={styles.TextContainer}>
-                    <Text style={styles.FirstText}>Main Agar Kahoon</Text>
-                    <Text style={styles.SecondText}>Sonu Nigam</Text>
+                    <Text style={styles.FirstText}> {MusicName} </Text>
+                    <Text style={styles.SecondText}> {SingerName} </Text>
                 </View>
             </View>
             <View style={styles.IconContainer}>
@@ -41,9 +39,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#87888a',
         flexDirection: 'row',
         borderRadius: 5,
-        width: '100%',
-        height: '10%',
-        marginBottom: '1%'
+        width: '95%',
+        height: 60,
+        marginBottom: '18%',
+        alignItems: 'center',
+        marginLeft: 10,
+
     },
     MainContainer: {
         alignItems: 'center',

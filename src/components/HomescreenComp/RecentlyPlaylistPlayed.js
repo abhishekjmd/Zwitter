@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +20,7 @@ const RecentlyPlayedComponent = ({ textField, imageField }) => {
 
 const RecentlyPlaylistPlayed = () => {
     const [response, setResponse] = useState('')
+    // const [isLoading, setIsLoading] = useState(true)
     const { token } = useSelector((state) => {
         return state
     });
@@ -46,17 +47,19 @@ const RecentlyPlaylistPlayed = () => {
     }, [])
     return (
         <View style={styles.main}>
-            <FlatList
-                data={response}
-                numColumns={2}
-                renderItem={({ item }) => {
-                    return (
-                        <View>
-                            <RecentlyPlayedComponent textField={item.track.album.name} imageField={item.track.album.images[0].url} />
-                        </View>
-                    )
-                }}
-            />
+            
+                        <FlatList
+                            data={response}
+                            numColumns={2}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View>
+                                        <RecentlyPlayedComponent textField={item.track.album.name} imageField={item.track.album.images[0].url} />
+                                    </View>
+                                )
+                            }}
+                        />
+            
         </View>
     )
 }
@@ -64,9 +67,9 @@ const RecentlyPlaylistPlayed = () => {
 export default RecentlyPlaylistPlayed
 
 const styles = StyleSheet.create({
-    main:{
-        justifyContent:'center',
-        alignItems:'center'
+    main: {
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     root: {
         width: 180,

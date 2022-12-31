@@ -31,11 +31,11 @@ const RecentlyPlayed = () => {
         json: true
       })
       const result = await res.json();
-      const finalResult = result.items;
-      const updateArr = new Set(finalResult.map((item) => { item.track.album.images[0] }));
+      // const finalResult = result.items;
+      // const updateArr = new Set(finalResult.map((item) => { item.track.album.images[0] }));
       // const lastUpdate = json.stringify();
-      setResponse(finalResult);
-      console.log(updateArr);
+      setResponse(result);
+      console.log(result);
     } catch (error) {
       console.log(error)
     }
@@ -51,14 +51,14 @@ const RecentlyPlayed = () => {
       </View>
       <FlatList
         horizontal
-        data={response}
+        data={response.items}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
             <View>
               <RecentPlayedComp
-                image={item}
-              // TrackName={item.track.name}
+                image={item.track.album.images[0].url}
+                TrackName={item.track.name}
               />
             </View>
           )

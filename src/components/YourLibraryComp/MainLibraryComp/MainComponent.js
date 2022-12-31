@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-// import { API_TOKEN } from '@env'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchToken } from '../../../Redux/Reducers/TokenReducer'
 export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPressed }) => {
