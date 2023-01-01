@@ -1,6 +1,9 @@
+import React, {  useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { BroswerAsyncThunk } from '../../../Redux/Reducers/SearchScreenSlice'
+
+
 const BrowseCardComp = ({ text, image, onPress }) => {
     return (
         <TouchableOpacity style={styles.mainContainer} onPress={onPress}>
@@ -13,29 +16,24 @@ const BrowseCardComp = ({ text, image, onPress }) => {
 }
 
 const BrowseComponent = () => {
-    const [response, setResponse] = useState('')
-    const { token } = useSelector((state) => {
-        return state
-    });
-    const BrowseApi = async () => {
-        const endpointUrl = 'https://api.spotify.com/v1/browse/categories?limit=50';
-        console.log('Browser AccessToken:', token)
-        const res = await fetch(endpointUrl, {
-            headers:
-                { 'Authorization': 'Bearer '  + token },
-            json: true
-        })
-        const result = await res.json();
-        console.log(result);
-        setResponse(result.categories);
+    const dispatch = useDispatch();
+    const BrowseSearchData = useSelector((state) => state.SearchReducer.BrowseSearch)
+    const dispatchFunction = async () => {
+        try {
+            await dispatch(BroswerAsyncThunk())
+            console.log(BrowseSearchData)
+        } catch (error) {
+            console.log(error)
+        }
     }
+    
     useEffect(() => {
-        BrowseApi()
+        dispatchFunction();
     }, [])
     return (
         <View>
             <FlatList
-                data={response.items}
+                data={BrowseSearchData.items}
                 key={'_'}
                 keyExtractor={item => "_" + item.id}
                 renderItem={({ item, index }) => {
@@ -44,7 +42,6 @@ const BrowseComponent = () => {
                     )
                 }}
                 numColumns={2}
-
             />
         </View>
     )

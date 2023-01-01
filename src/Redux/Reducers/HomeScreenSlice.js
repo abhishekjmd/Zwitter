@@ -37,16 +37,17 @@ export const FavouriteArtistAsync = createAsyncThunk(
     async () => {
         try {
             const endPointUrl = `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=5`;
+            const Apikey = await AsyncStorage.getItem('tokenValue')
             const res = await fetch(endPointUrl, {
                 'headers': {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + Apikey
                 },
                 json: true
             })
-            const Data2 = await res.playlists;
+            const response = await res.json();
             // setResponse(Data.playlists)
-            console.log(Data2);
-            return Data2
+            console.log(response);
+            return response
         } catch (error) {
             console.log(error)
         }
@@ -58,16 +59,16 @@ export const RecentlyPlayedPlaylistAsync = createAsyncThunk(
     async () => {
         try {
             const endPointUrl = `https://api.spotify.com/v1/me/player/recently-played?limit=20&efore=3600000`;
+            const Apikey = await AsyncStorage.getItem('tokenValue')
             const res = await fetch(endPointUrl, {
                 'headers': {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + Apikey
                 },
                 json: true
             })
-            const Data3 = await res.json();
-            // setResponse(Data.playlists)
-            console.log(Data3);
-            return Data3
+            const response = await res.json();
+            console.log(response);
+            return response
         } catch (error) {
             console.log(error)
         }
@@ -85,11 +86,11 @@ const HomeScreenApiSlice = createSlice({
         builder.addCase(BigHitsPlaylistAsync.fulfilled, (state, action) => {
             state.BigHits = action.payload
         })
-        builder.addCase(FavouriteArtistAsync.fulfilled, (state, { payload }) => {
-            state.FavouriteArtist = payload.items
+        builder.addCase(FavouriteArtistAsync.fulfilled, (state, action) => {
+            state.FavouriteArtist = action.payload
         })
-        builder.addCase(RecentlyPlayedPlaylistAsync.fulfilled, (state, { payload }) => {
-            state.RecentlyPlayed = payload.items
+        builder.addCase(RecentlyPlayedPlaylistAsync.fulfilled, (state, action) => {
+            state.RecentlyPlayed = action.payload
         })
     },
 })

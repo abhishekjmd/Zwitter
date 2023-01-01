@@ -17,16 +17,12 @@ const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
 }
 
 const BiggestHits = () => {
-    const [response, setResponse] = useState('')
     const dispatch = useDispatch();
-
-    // const { token, BigHits } = useSelector((state) => { return state })
     const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
     const data = async () => {
         try {
-            const BigHitsfunction = await dispatch(BigHitsPlaylistAsync())
+             await dispatch(BigHitsPlaylistAsync())
             console.log('BigHitsData', BigHitsData.items);
-            setResponse(BigHitsData)
         } catch (error) {
             console.log(error)
         }

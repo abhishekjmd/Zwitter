@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { FavouriteArtistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 
 const FavouriteArtistComp = ({ image, ArtistName }) => {
     return (
@@ -17,34 +17,19 @@ const FavouriteArtistComp = ({ image, ArtistName }) => {
 }
 
 const FavouriteArtist = () => {
-    const [response, setResponse] = useState('')
-    // const [isLoading, setIsLoading] = useState(true)
-    // const { token } = useSelector((state) => {
-    // return state
-    // })
-    const { token, BigHits } = useSelector((state) => { return state })
-
-    const FavouriteArtistApi = async () => {
+    dispatch = useDispatch();
+    const FavouriteArtistData = useSelector((state) => state.homeReducer.FavouriteArtist)
+    const dispatchFunction = async () => {
         try {
-            const ApiKey = await AsyncStorage.getItem('tokenValue')
-            const endpointUrl = `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=5`
-            const res = await fetch(endpointUrl, {
-                'headers': {
-                    'Authorization': 'Bearer ' + ApiKey
-                },
-                json: true
-            })
-            const result = await res.json();
-            console.log(result);
-            console.log('APIkey', ApiKey)
-            setResponse(result);
-            // setIsLoading(false);
+            await dispatch(FavouriteArtistAsync())
+            console.log(FavouriteArtistData)
         } catch (error) {
             console.log(error)
         }
     }
+
     useEffect(() => {
-        FavouriteArtistApi();
+        dispatchFunction()
     }, [])
     return (
         <View>
@@ -53,7 +38,7 @@ const FavouriteArtist = () => {
             </View>
             <FlatList
                 horizontal
-                data={response.items}
+                data={FavouriteArtistData.items}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (

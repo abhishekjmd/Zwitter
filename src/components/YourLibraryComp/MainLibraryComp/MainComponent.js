@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-
-
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchToken } from '../../../Redux/Reducers/TokenReducer'
+import { MainLibraryAsync } from '../../../Redux/Reducers/LibraryScreenReducer'
+
+
+// ----------------- MAINCREATECOMPONENT ------------
 export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPressed }) => {
   return (
     <Pressable style={styles.root} onPress={OnPlaylistPressed}>
@@ -22,37 +23,27 @@ export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPres
   )
 }
 
-const MainRenderComponent = () => {
-  const [response, setResponse] = useState('')
-  const navigation = useNavigation();
-  
 
-   const {token} =  useSelector((state)=>{
-     return state
-   });
-  const spotifyPlaylists = async () => {
-    const endpointUrl = "https://api.spotify.com/v1/me/playlists";
-    console.log(token);
-    try {
-      const res = await fetch(endpointUrl, {
-        headers:
-          { 'Authorization': 'Bearer ' + token },
-        json: true
-      })
-      const result = await res.json();
-      console.log(result);
-      setResponse(result);
-    } catch (error) {
-      console.log(error)
-    }
+// ----------------- MAINRENDERFUNCTION ------------
+const MainRenderComponent = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const MainLibraryData = useSelector((state) => state.libraryReducer.MainLibrary)
+  const Dataid = useSelector((state) => state.libraryReducer.DataId)
+  const dispatchFunction = async () => {
+    await dispatch(MainLibraryAsync());
+    console.log('MainLibraryData', MainLibraryData)
+    console.log('Dataid',Dataid[5].id)
   }
   useEffect(() => {
-    spotifyPlaylists();
+    dispatchFunction()
   }, [])
+
   return (
     <View>
+
       <FlatList
-        data={response.items}
+        data={MainLibraryData.items}
         renderItem={({ item, index }) => {
           return (
             <View style={{ marginTop: 5 }} key={index}>
@@ -69,7 +60,8 @@ const MainRenderComponent = () => {
           )
         }}
       />
-    </View>
+
+    </View >
   )
 }
 

@@ -1,20 +1,17 @@
 import { StyleSheet, View, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import TopBar from './TopBar'
-import RecentlyPlayed from './RecentlyPlayed'
-import { useSelector } from 'react-redux'
 import BiggestHits from './BiggestHits'
 import FavouriteArtist from './FavouriteArtist'
-import NewReleases from './NewReleases'
 import RecentlyPlaylistPlayed from './RecentlyPlaylistPlayed'
 const Index = () => {
     return (
         <ScrollView style={styles.root}>
             <TopBar />
+            <RecentlyPlaylistPlayed />
             <BiggestHits />
             <FavouriteArtist />
             {/*
-            <RecentlyPlaylistPlayed />
            // <RecentlyPlayed />
         */}
         </ScrollView>
