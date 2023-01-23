@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { MainLibraryAsync } from '../../../Redux/Reducers/LibraryScreenReducer'
@@ -28,22 +28,23 @@ export const MainCreateComponent = ({ PlaylistName, image, Owner, OnPlaylistPres
 const MainRenderComponent = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  const MainLibraryData = useSelector((state) => state.libraryReducer.MainLibrary)
-  const Dataid = useSelector((state) => state.libraryReducer.DataId)
-  const dispatchFunction = async () => {
-    await dispatch(MainLibraryAsync());
-    console.log('MainLibraryData', MainLibraryData)
-    console.log('Dataid',Dataid[5].id)
-  }
+
+  
+  const AccessToken = useSelector((state) => state.AccessToken.token)
+  
+  const dispatchFunction = useCallback(() => {
+    dispatch(MainLibraryAsync(AccessToken))
+  }, [dispatch])
+  
   useEffect(() => {
     dispatchFunction()
-  }, [])
+  }, [dispatchFunction])
 
+  const MainLibraryData = useSelector((state) => state.libraryReducer.MainLibrary)
   return (
     <View>
-
       <FlatList
-        data={MainLibraryData.items}
+        data={MainLibraryData}
         renderItem={({ item, index }) => {
           return (
             <View style={{ marginTop: 5 }} key={index}>
@@ -60,6 +61,7 @@ const MainRenderComponent = () => {
           )
         }}
       />
+
 
     </View >
   )

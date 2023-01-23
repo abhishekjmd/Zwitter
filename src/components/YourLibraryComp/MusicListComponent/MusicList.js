@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image,Pressable, TouchableOpacity } from 'react-native'
 import React,{useState} from 'react'
-import SmallPlayer from '../../AllweatherComps/MusicPlayerComponent/SmallPlayer'
 
 const MusicList = ({ SongName, Artists, Images, OnMusicPressed, onSongPressed }) => {
   

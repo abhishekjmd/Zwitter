@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FavouriteArtistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 
@@ -18,19 +18,17 @@ const FavouriteArtistComp = ({ image, ArtistName }) => {
 
 const FavouriteArtist = () => {
     dispatch = useDispatch();
-    const FavouriteArtistData = useSelector((state) => state.homeReducer.FavouriteArtist)
-    const dispatchFunction = async () => {
-        try {
-            await dispatch(FavouriteArtistAsync())
-            console.log(FavouriteArtistData)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const AccessToken = useSelector((state) => state.AccessToken.token)
+
+    const dispatchFunction = useCallback(() => {
+        dispatch(FavouriteArtistAsync(AccessToken))
+    }, [dispatch])
 
     useEffect(() => {
         dispatchFunction()
-    }, [])
+    }, [dispatchFunction])
+
+    const favouriteArtistData = useSelector((state) => state.homeReducer.FavouriteArtist)
     return (
         <View>
             <View style={styles.favoriteArtistContainer}>
@@ -38,7 +36,7 @@ const FavouriteArtist = () => {
             </View>
             <FlatList
                 horizontal
-                data={FavouriteArtistData.items}
+                data={favouriteArtistData.items}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (

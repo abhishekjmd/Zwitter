@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigHitsPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
         <Pressable style={styles.PlaylistMainContainer} onPress={onPlaylistCompPressed} >
@@ -18,19 +17,15 @@ const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
 
 const BiggestHits = () => {
     const dispatch = useDispatch();
-    const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
-    const data = async () => {
-        try {
-             await dispatch(BigHitsPlaylistAsync())
-            console.log('BigHitsData', BigHitsData.items);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const AccessToken = useSelector((state) => state.AccessToken.token)
+    const dataDispatchFunction = useCallback(() => {
+        dispatch(BigHitsPlaylistAsync(AccessToken))
+    }, [dispatch])
 
     useEffect(() => {
-        data();
+        dataDispatchFunction()
     }, [])
+    const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
     return (
         <View style={{ backgroundColor: 'black' }}>
             <View style={styles.biggesthitsContainer}>
@@ -39,7 +34,7 @@ const BiggestHits = () => {
 
             <FlatList
                 horizontal
-                data={BigHitsData.items}
+                data={BigHitsData}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
@@ -49,6 +44,8 @@ const BiggestHits = () => {
                     )
                 }}
             />
+
+
         </View>
     )
 }

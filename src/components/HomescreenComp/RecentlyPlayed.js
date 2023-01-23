@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { RecentlyPlayedPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice';
 
 const RecentPlayedComp = ({ TrackName, image }) => {
   return (
@@ -16,34 +17,21 @@ const RecentPlayedComp = ({ TrackName, image }) => {
 }
 
 const RecentlyPlayed = () => {
-  const [response, setResponse] = useState('')
-  const { token } = useSelector((state) => {
-    return state
-  });
+  
+  const dispatch = useDispatch();
+  const AccessToken = useSelector((state) => state.AccessToken.token)
 
-  const RecentlyPlayedApi = async () => {
-    try {
-      const endPointUrl = `https://api.spotify.com/v1/me/player/recently-played?limit=20&efore=3600000`
-      const res = await fetch(endPointUrl, {
-        'headers': {
-          'Authorization': 'Bearer ' + token
-        },
-        json: true
-      })
-      const result = await res.json();
-      // const finalResult = result.items;
-      // const updateArr = new Set(finalResult.map((item) => { item.track.album.images[0] }));
-      // const lastUpdate = json.stringify();
-      setResponse(result);
-      console.log(result);
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const dispatchFunction = useCallback(() => {
+    dispatch(RecentlyPlayedPlaylistAsync(AccessToken))
+  }, [dispatch])
 
   useEffect(() => {
-    RecentlyPlayedApi();
-  }, [])
+    dispatchFunction()
+  }, [dispatchFunction])
+
+  const RecentlyPlayedData = useSelector((state) => state.homeReducer.RecentlyPlayed)
+
+  
   return (
     <View>
       <View style={styles.RecentlyPlayedContainer}>
@@ -51,7 +39,7 @@ const RecentlyPlayed = () => {
       </View>
       <FlatList
         horizontal
-        data={response.items}
+        data={RecentlyPlayedData}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
           return (

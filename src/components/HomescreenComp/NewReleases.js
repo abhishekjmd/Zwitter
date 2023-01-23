@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Pressable, FlatList, Image} from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { StyleSheet, Text, View, Pressable, FlatList, Image } from 'react-native'
+import React, { useEffect, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NewReleasesPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 
 const NewReleasesComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
@@ -16,30 +17,20 @@ const NewReleasesComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     )
 }
 const NewReleases = () => {
-    const [response, setResponse] = useState('')
-    const { token } = useSelector((state) => {
-        return state
-    })
-    const NewReleaseApi = async () => {
-        try {
-            const endPointUrl = `https://api.spotify.com/v1/browse/new-releases?country=IN&limit=20`
-            const res = await fetch(endPointUrl, {
-                'headers': {
-                    'Authorization': 'Bearer ' + token
-                },
-                json: true
-            })
-            const result = await res.json();
-            console.log(result.albums.items);
-            setResponse(result.albums);
-            // setIsLoading(false);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
+    const dispatch = useDispatch()
+
+   
+    const AccessToken = useSelector((state) => state.AccessToken.token)
+    const dispatchFunction = useCallback(() => {
+        dispatch(NewReleasesPlaylistAsync(AccessToken))
+    }, [dispatch])
+
     useEffect(() => {
-        NewReleaseApi();
-    }, [])
+        dispatchFunction()
+    }, [dispatchFunction])
+
+    const newReleaseData = useSelector((state) => state.homeReducer.NewReleases)
     return (
         <View>
             <View style={styles.container}>
@@ -47,13 +38,14 @@ const NewReleases = () => {
             </View>
             <FlatList
                 horizontal
-                data={response.items}
+                data={newReleaseData}
                 renderItem={({ item }) => {
                     return (
                         <NewReleasesComp image={item.images[0].url} playlistName={item.name} />
                     )
                 }}
             />
+
         </View>
     )
 }

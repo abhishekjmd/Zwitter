@@ -9,6 +9,7 @@ import LinkingScreen from './src/screens/LinkingScreen';
 import { Provider, useDispatch } from 'react-redux'
 import store from './src/Redux/Store';
 import { fetchToken } from './src/Redux/Reducers/TokenReducer';
+import { useCallback } from 'react';
 
 const authConfig = {
   // clientId: 'facd2be1aa6c4a9c99089141bed15e30',
@@ -29,26 +30,24 @@ const authConfig = {
 const App = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState('');
-  const spotifyPress = async () => {
-    try {
-      const result = await authorize(authConfig);
-      console.log(result);
-      const AccessToken = await result.accessToken;
-      console.log(AccessToken);
-      setToken(AccessToken);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  // const tokenFunc = async()=>{
-    
+  // const spotifyPress = async () => {
+  // try {
+  // const result = await authorize(authConfig);
+  // console.log(result);
+  // const AccessToken = await result.accessToken;
+  // console.log(AccessToken);
+  // setToken(AccessToken);
+  // } catch (error) {
+  // console.log(error)/;
   // }
-  const GetToken = dispatch(fetchToken())
+  // }
+
+
+  // const GetToken = dispatch(fetchToken())
 
   useEffect(() => {
-    GetToken
-  }, [GetToken])
+    dispatch(fetchToken())
+  }, [dispatch])
   return (
     <View style={styles.root}>
       <TabNavigation />

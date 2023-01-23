@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { authorize } from 'react-native-app-auth'
 const initialState = {
@@ -22,14 +21,10 @@ export const fetchToken = createAsyncThunk(
                 },
             };
             const result = await authorize(authConfig);
-            const AccessToken =  result.accessToken;
-            // const tokenData =  AccessToken;
-            await AsyncStorage.setItem('tokenValue', AccessToken);
-            console.log(AccessToken);
-            return AccessToken
+            const AccessToken = result.accessToken;
+            return AccessToken;
         } catch (error) {
             console.log(error);
-            
         }
     }
 )

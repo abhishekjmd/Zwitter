@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,32 +25,27 @@ const Index = () => {
   const CoverImage = route.params.Images;
   const PlayListName = route.params.PlaylistName;
   const CreatorImage = route.params.OwnerImage
- 
+
   const dispatch = useDispatch();
-  const MusicListData = useSelector((state) => state.libraryReducer.MusicList)
-  const dispatchFunction = async () => {
-    try {
-      await dispatch(MuslicListAsync());
-      console.log('dataId', dataId)
-      await AsyncStorage.setItem('dataId', dataId)
-      console.log('MusicListData', MusicListData)
-    } catch (error) {
-      console.log(error);
-    }
-  }
- 
+  const AccessToken = useSelector((state) => state.AccessToken.token)
+
+  const dispatchFunction = useCallback(() => {
+    dispatch(MuslicListAsync({ AccessToken, dataId }))
+  }, [dispatch])
 
 
   useEffect(() => {
     dispatchFunction();
 
-  }, [])
+  }, [dispatchFunction])
+  const MusicListData = useSelector((state) => state.libraryReducer.MusicList)
+
   return (
     <View style={styles.root}>
       <MusicListTopComponents PlaylistName={PlayListName} Images={CoverImage} Creator={Display_Name} CreatorImage={CreatorImage} />
 
       <FlatList
-        data={MusicListData.items}
+        data={MusicListData}
         renderItem={({ item }) => {
           return (
             <View>
@@ -81,12 +76,11 @@ const Index = () => {
                 MusicName={musicName}
                 SingerName={musicOwner}
               />
-
             </>
           )
+
           : null
       }
-
     </View>
   )
 }

@@ -1,4 +1,4 @@
-import React, {  useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { BroswerAsyncThunk } from '../../../Redux/Reducers/SearchScreenSlice'
@@ -17,23 +17,20 @@ const BrowseCardComp = ({ text, image, onPress }) => {
 
 const BrowseComponent = () => {
     const dispatch = useDispatch();
-    const BrowseSearchData = useSelector((state) => state.SearchReducer.BrowseSearch)
-    const dispatchFunction = async () => {
-        try {
-            await dispatch(BroswerAsyncThunk())
-            console.log(BrowseSearchData)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    
+    const AccessToken = useSelector((state) => state.AccessToken.token)
+    const dispatchFunction = useCallback(() => {
+        dispatch(BroswerAsyncThunk(AccessToken))
+    }, [dispatch])
+
     useEffect(() => {
         dispatchFunction();
-    }, [])
+    }, [dispatchFunction])
+
+    const BrowseSearchData = useSelector((state) => state.SearchReducer.BrowseSearch)
     return (
         <View>
             <FlatList
-                data={BrowseSearchData.items}
+                data={BrowseSearchData}
                 key={'_'}
                 keyExtractor={item => "_" + item.id}
                 renderItem={({ item, index }) => {

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RecentlyPlayedPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 
@@ -20,33 +20,23 @@ const RecentlyPlayedComponent = ({ textField, imageField }) => {
 }
 
 const RecentlyPlaylistPlayed = () => {
-    const [response, setResponse] = useState('')
     const dispatch = useDispatch();
-    const RecentlyPlayedData = useSelector((state) =>
-        state.homeReducer.RecentlyPlayed
-    );
-    const DispatchFunction = async () => {
-        try {
-             dispatch(RecentlyPlayedPlaylistAsync())
-            const finalResult = await RecentlyPlayedData.items;
-            const renderResult = await finalResult.slice(0,6);
-            console.log('slice',renderResult)
-            setResponse(finalResult.slice(0, 6))
-            // console.log(RecentlyPlayedData);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const AccessToken = useSelector((state) => state.AccessToken.token)
 
+    const dispatchFunction = useCallback(() => {
+        dispatch(RecentlyPlayedPlaylistAsync(AccessToken))
+    }, [dispatch])
 
     useEffect(() => {
-        DispatchFunction()
-    }, [])
+        dispatchFunction()
+    }, [dispatchFunction])
+
+    const RecentlyPlayedData = useSelector((state) => state.homeReducer.RecentlyPlayed)
 
     return (
         <View style={styles.main}>
             <FlatList
-                data={response}
+                data={RecentlyPlayedData}
                 numColumns={2}
                 renderItem={({ item }) => {
                     return (
@@ -56,6 +46,7 @@ const RecentlyPlaylistPlayed = () => {
                     )
                 }}
             />
+
         </View>
     )
 }

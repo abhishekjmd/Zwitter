@@ -3,25 +3,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     MainLibrary: '',
-    DataId:'',
+    
     MusicList: ''
 }
 
 export const MainLibraryAsync = createAsyncThunk(
     'MainLibrary',
-    async () => {
+    async (AccessToken) => {
         try {
-            const ApiKey = await AsyncStorage.getItem('tokenValue')
             const endpointUrl = "https://api.spotify.com/v1/me/playlists";
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + ApiKey },
+                    { 'Authorization': 'Bearer ' + AccessToken },
                 json: true
             })
             const result = await res.json();
             console.log(result);
            
-            return result
+            return result.items;
         } catch (error) {
             console.log(error)
         }
@@ -31,20 +30,17 @@ export const MainLibraryAsync = createAsyncThunk(
 
 export const MuslicListAsync = createAsyncThunk(
     'MusicList',
-    async () => {
+    async ({AccessToken, dataId}) => {
         try {
-            const APIKey = await AsyncStorage.getItem('tokenValue')
-            const dataId = await AsyncStorage.getItem('dataId')
             const endpointUrl = `https://api.spotify.com/v1/playlists/${dataId}/tracks`;
             const res = await fetch(endpointUrl, {
                 headers:
-                    { 'Authorization': 'Bearer ' + APIKey },
+                    { 'Authorization': 'Bearer ' + AccessToken },
                 json: true
             })
             const result = await res.json();
-            // console.log(result);
-            console.log('id')
-            return result
+            console.log('musiclistapi',result.items)
+            return result.items
         }
         catch (error) {
             console.log(error)
@@ -58,7 +54,6 @@ const LibraryScreenApiSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(MainLibraryAsync.fulfilled, (state, action) => {
             state.MainLibrary = action.payload;
-            state.DataId = action.payload.items;
         })
         builder.addCase(MuslicListAsync.fulfilled, (state, action) => {
             state.MusicList = action.payload

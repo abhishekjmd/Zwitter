@@ -2,12 +2,9 @@ import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native'
 import React from 'react'
 import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'
-import SwipeToggle from '../AllweatherComps/SwipeToggle'
 const TopBar = () => {
-    const { height, width } = Dimensions.get('window');
     return (
-        
-            <View style={styles.root}>
+        <View style={styles.root}>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}> Good afternoon </Text>
                 </View>
