@@ -1,17 +1,33 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { StyleSheet, Text, View, Image, Pressable,TextInput } from 'react-native'
 
-export const SearchComps = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) => {
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
+export const SearchBarComp = ({ onSubmitEditing, value, onChangeText }) => {
     return (
-        <View style={styles.ResultContainer}>
-            <View style={styles.ResultSubContainer}>
-                <View style={styles.ImageContainer}>
-                    <Image source={{ uri: image }} style={styles.image} />
+        <View style={styles.searchBarMainContainer}>
+            <View style={styles.searchBarSearchContainer}>
+                <AntDesign name='arrowleft' size={30} style={styles.searchBarIcon} />
+                <TextInput placeholder='What do you want to listen to?' style={styles.searchBartextInput} value={value} onChangeText={onChangeText} placeholderTextColor='#d5ded7' onSubmitEditing={onSubmitEditing} />
+                <Ionicons name='md-camera-outline' size={30} style={styles.searchBarIcon} />
+            </View>
+        </View>
+    )
+}
+
+
+export const TrackComp = ({ image, trackName, Artist, ArtistTwo, ArtistThree }) => {
+    return (
+        <View style={styles.trackContainer}>
+            <View style={styles.trackSubContainer}>
+                <View style={styles.trackImageContainer}>
+                    <Image source={{ uri: image }} style={styles.trackImage} />
                 </View>
-                <View style={styles.TextContainer}>
-                    <Text style={styles.SearchText}> {trackName} </Text>
-                    <Text style={styles.SearchTexttTwo}> {Artist}, {ArtistTwo}, {ArtistThree}
+                <View style={styles.trackTextContainer}>
+                    <Text style={styles.trackText}> {trackName} </Text>
+                    <Text style={styles.trackTexttTwo}> {Artist}, {ArtistTwo}, {ArtistThree}
                     </Text>
                 </View>
             </View>
@@ -23,14 +39,14 @@ export const SearchComps = ({ image, trackName, Artist, ArtistTwo, ArtistThree }
 
 export const AlbumsComps = ({ image, albumName, singerThree, singerTwo, singerOne, albumType, releaseYear, onAlbumCompPressed }) => {
     return (
-        <Pressable style={styles.root} onPress={onAlbumCompPressed} >
-            <View style={styles.imageContainer}>
-                <Image source={{ uri: image }} style={styles.image} />
+        <Pressable style={styles.albumContainer} onPress={onAlbumCompPressed} >
+            <View style={styles.albumImageContainer}>
+                <Image source={{ uri: image }} style={styles.albumImage} />
             </View>
-            <View style={styles.textContainer}>
-                <Text style={styles.firstText}> {albumName && albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
-                <Text style={styles.secondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
-                <Text style={styles.thirdText}> {albumType && albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
+            <View style={styles.albumTextContainer}>
+                <Text style={styles.albumFirstText}> {albumName && albumName.length > 20 ? albumName.slice(0, 20) + '...' : albumName} </Text>
+                <Text style={styles.albumSecondText}> {singerOne}. {singerTwo}.{singerThree} </Text>
+                <Text style={styles.albumThirdText}> {albumType && albumType.length > 6 ? albumType.slice(0, 6) : albumType} . {releaseYear.length > 4 ? releaseYear.slice(0, 4) : releaseYear} </Text>
             </View>
         </Pressable>
     )
@@ -64,82 +80,81 @@ export const PlaylistComp = ({ playlistName, image, onPlaylistCompPressed }) => 
 }
 
 const styles = StyleSheet.create({
-    ResultContainer: {
+    trackContainer: {
         backgroundColor: 'black',
         justifyContent: 'center',
         width: '100%',
-        // marginTop: 5,
         height: 80,
     },
-    ResultSubContainer: {
+    trackSubContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
         height: 70,
     },
-    ImageContainer: {
+    trackImageContainer: {
         borderRadius: 10,
         height: '80%',
         width: '15%',
         marginLeft: '2%',
 
     },
-    image: {
+    trackImage: {
         borderRadius: 5,
         height: '100%',
         width: '100%',
 
     },
-    TextContainer: {
+    trackTextContainer: {
         marginLeft: '2%',
         height: '80%',
         width: '74%',
         // backgroundColor:'red'
     },
-    SearchText: {
+    trackText: {
         fontWeight: '500',
         color: 'white',
         fontSize: 18,
     },
-    SearchTexttTwo: {
+    trackTexttTwo: {
         color: '#cacfcc',
         fontWeight: '500'
     },
-    root: {
+    albumContainer: {
         width: '48%',
         height: 250,
         // backgroundColor: 'green',
         margin: '1.5%',
         marginBottom:10,
     },
-    imageContainer: {
+    albumImageContainer: {
         width: '100%',
         height: '65%',
         alignItems:'center',
       
     },
-    image: {
+    albumImage: {
         width: '95%',
         height: '100%'
     },
-    textContainer: {
+    albumTextContainer: {
         width: '100%',
         marginTop: '4%',
         height: '26%',
         justifyContent: 'center',
     },
-    firstText: {
+    albumFirstText: {
         color: 'white',
         fontWeight: '500',
         fontSize: 15,
     },
-    secondText: {
+    albumSecondText: {
         color: '#d7d8db',
         fontWeight: '500',
         // fontSize: 16,
 
     },
-    thirdText: {
+    albumThirdText: {
         color: '#d7d8db',
         fontWeight: '500',
         fontSize: 16,
@@ -200,5 +215,24 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: 'white',
         fontSize: 14,
+    },
+    searchBarMainContainer: {
+        backgroundColor: 'yellow',
+        width: '100%',
+        height: 60,
+    },
+    searchBarSearchContainer: {
+        justifyContent: 'space-around',
+        backgroundColor: '#757575',
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: '100%',
+        height: '100%',
+    },
+    searchBartextInput: {
+        fontSize: 20
+    },
+    searchBarIcon: {
+        color: 'white'
     },
 })

@@ -8,6 +8,7 @@ const SwipeComp = ({ TopPressed, SongsPressed, AlbumsPressed, PlaylistsPressed, 
             <FlatList
                 data={SwipableComponent}
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
                 renderItem={() => {
                     return (
                         <View style={{ flexDirection: 'row' }}>
@@ -17,8 +18,6 @@ const SwipeComp = ({ TopPressed, SongsPressed, AlbumsPressed, PlaylistsPressed, 
                             <SwipableComponent text='Playlists' onPress={PlaylistsPressed} />
                             <SwipableComponent text='Artists' onPress={ArtistsPressed} />
                             <SwipableComponent text='Podcasts & Shows' type='Primary' onPress={PodcastsShowsPressed} />
-                            <SwipableComponent text='Profiles' onPress={ProfilesPressed} />
-                            <SwipableComponent text='Genres & Moods' type='Primary' onPress={GenresMoodsPressed} />
                         </View>
                     )
                 }}

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Premium = () => {
   return (
-    <View>
+    <View style={styles.root}>
       <Text>Premium</Text>
     </View>
   )
@@ -11,4 +11,9 @@ const Premium = () => {
 
 export default Premium
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: 'black'
+  },
+})

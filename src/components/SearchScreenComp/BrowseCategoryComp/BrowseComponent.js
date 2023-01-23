@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity,ScrollView } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { BroswerAsyncThunk } from '../../../Redux/Reducers/SearchScreenSlice'
 
@@ -25,10 +25,9 @@ const BrowseComponent = () => {
     useEffect(() => {
         dispatchFunction();
     }, [dispatchFunction])
-
     const BrowseSearchData = useSelector((state) => state.SearchReducer.BrowseSearch)
     return (
-        <View>
+        <ScrollView>
             <FlatList
                 data={BrowseSearchData}
                 key={'_'}
@@ -40,7 +39,7 @@ const BrowseComponent = () => {
                 }}
                 numColumns={2}
             />
-        </View>
+        </ScrollView>
     )
 }
 
@@ -51,7 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         width: '45%',
         height: 180,
-        margin: 10
+        margin: 10,
+        borderRadius:10
     },
     main: {
         justifyContent: 'center',

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     BrowseSearch: '',
-    MainSearch: ''
+    MainSearch: '',
 }
 
 export const BroswerAsyncThunk = createAsyncThunk(
@@ -26,6 +26,7 @@ export const BroswerAsyncThunk = createAsyncThunk(
 )
 
 
+
 export const MainSearchAsyncThunk = createAsyncThunk(
     'MainSearch',
     async ({ AccessToken, value, type }) => {
@@ -44,6 +45,8 @@ export const MainSearchAsyncThunk = createAsyncThunk(
         }
     }
 )
+
+
 
 const SearchScreenSlice = createSlice({
     initialState,

@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList,ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
@@ -13,15 +13,14 @@ const PlaylistSearchResultComp = () => {
   const CoverImage = route.params.Images
   const PlayListName = route.params.PlayListName
   const CreatorName = route.params.OwnerName
-  const { token } = useSelector((state) => {
-    return state
-  })
+  const AccessToken = useSelector((state) => state.AccessToken.token)
+
   const PlaylistApi = async () => {
     try {
       const EndpointUrl = `https://api.spotify.com/v1/playlists/${playlist_id}`
       const res = await fetch(EndpointUrl, {
         'headers': {
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + AccessToken
         },
         json: true
       })
@@ -37,7 +36,7 @@ const PlaylistSearchResultComp = () => {
     PlaylistApi()
   }, [])
   return (
-    <View style={{ backgroundColor: 'black' }}>
+    <ScrollView style={{ backgroundColor: 'black' }}>
       <MusicListTopComponents Images={CoverImage} PlaylistName={PlayListName} Creator={CreatorName} LikesCount={30} />
       <FlatList
         style={{ backgroundColor: 'black' }}
@@ -54,7 +53,7 @@ const PlaylistSearchResultComp = () => {
           )
         }}
       />
-    </View>
+    </ScrollView>
   )
 }
 

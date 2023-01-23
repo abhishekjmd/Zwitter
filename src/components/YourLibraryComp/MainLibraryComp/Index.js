@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import TopComponent from './TopComponent'
 import MainComponent from './MainComponent'
 
 const Index = () => {
   return (
-    <View style={styles.root}>
+    <ScrollView style={styles.root}>
       <TopComponent />
       <MainComponent />
-    </View>
+    </ScrollView>
   )
 }
 

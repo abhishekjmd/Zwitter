@@ -9,7 +9,7 @@ const Navigation = () => {
     useEffect(() => {
         setTimeout(() => {
             setShowSplashScreen(false)
-        }, 9000)
+        }, 5000)
     }, [])
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigHitsPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
+import { PlaylistComp } from '../SearchScreenComp/MainSearchScreenComp/SubSearchComps'
 const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
         <Pressable style={styles.PlaylistMainContainer} onPress={onPlaylistCompPressed} >
@@ -26,6 +27,7 @@ const BiggestHits = () => {
         dataDispatchFunction()
     }, [])
     const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
+    
     return (
         <View style={{ backgroundColor: 'black' }}>
             <View style={styles.biggesthitsContainer}>
@@ -38,13 +40,12 @@ const BiggestHits = () => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
-                        <View>
-                            <BiggestHitsComp image={item.images[0].url} playlistName={item.name} />
+                        <View>   
+                        <BiggestHitsComp image={item.images[0].url} playlistName={item.name} />
                         </View>
                     )
                 }}
             />
-
 
         </View>
     )
@@ -53,12 +54,6 @@ const BiggestHits = () => {
 export default BiggestHits
 
 const styles = StyleSheet.create({
-    loader: {
-        minHeight: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     PlaylistMainContainer: {
         justifyContent: 'center',
         alignItems: 'center',

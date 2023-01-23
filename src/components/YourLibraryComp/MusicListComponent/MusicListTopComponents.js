@@ -11,14 +11,9 @@ const MusicListTopComponents = ({ PlaylistName, Images, Creator, CreatorImage, D
         <Image source={{ uri: Images }} style={styles.Image} />
       </View>
       <View style={styles.MainTextContainer}>
-        <Text style={styles.Playlist}>{PlaylistName} </Text>
+        <Text style={styles.Playlist}>{PlaylistName}</Text>
         <View style={styles.CreatorContainer}>
-          <Image source={{ uri: CreatorImage }} style={styles.CreatorImage} />
-          <Text style={styles.Creator}> {Creator}</Text>
-        </View>
-        <View style={styles.TimeContainer}>
-          <MaterialCommunityIcons name='web' size={20} color='grey' />
-          <Text style={styles.TimeContainerText}> {LikesCount} likes . {Duration} </Text>
+          <Text style={styles.Creator}>{Creator}</Text>
         </View>
         <View style={styles.shuffleContainer}>
           <View style={styles.likeShuffle}>
@@ -41,6 +36,7 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     height: 380,
+   
   },
   ImageContainer: {
     justifyContent: 'center',
@@ -53,7 +49,7 @@ const styles = StyleSheet.create({
     height: 190,
   },
   MainTextContainer: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   Playlist: {
     fontWeight: '600',
@@ -64,11 +60,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 5
-  },
-  CreatorImage: {
-    borderRadius: 20,
-    height: 20,
-    width: 20,
   },
   Creator: {
     color: 'white',

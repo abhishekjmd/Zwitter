@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList,ScrollView } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -41,9 +41,8 @@ const Index = () => {
   const MusicListData = useSelector((state) => state.libraryReducer.MusicList)
 
   return (
-    <View style={styles.root}>
+    <ScrollView style={styles.root}>
       <MusicListTopComponents PlaylistName={PlayListName} Images={CoverImage} Creator={Display_Name} CreatorImage={CreatorImage} />
-
       <FlatList
         data={MusicListData}
         renderItem={({ item }) => {
@@ -81,7 +80,7 @@ const Index = () => {
 
           : null
       }
-    </View>
+    </ScrollView>
   )
 }
 

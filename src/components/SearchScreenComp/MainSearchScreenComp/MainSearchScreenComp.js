@@ -1,28 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, TextInput, FlatList, Image, ScrollView } from 'react-native'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Text, View, FlatList, ScrollView } from 'react-native'
 import SwipeComp from './SwipeComp'
-import styles from './Styles'
-import { AlbumsComps, ArtistComp, PlaylistComp, SearchComps } from './SubSearchComps';
+import { AlbumsComps, ArtistComp, PlaylistComp, SearchBarComp, TrackComp } from './SubSearchComps';
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 import { MainSearchAsyncThunk } from '../../../Redux/Reducers/SearchScreenSlice'
-import { useCallback } from 'react'
 
-// ----------------- SEARCH BAR COMPONENT ------------
-const SearchBarComp = ({ onSubmitEditing, value, onChangeText }) => {
-    // const [term, setTerm] = useState('');
-    return (
-        <View style={styles.MainContainer}>
-            <View style={styles.SearchContainer}>
-                <AntDesign name='arrowleft' size={30} style={styles.Icon} />
-                <TextInput placeholder='What do you want to listen to?' style={styles.textInput} value={value} onChangeText={onChangeText} placeholderTextColor='#d5ded7' onSubmitEditing={onSubmitEditing} />
-                <Ionicons name='md-camera-outline' size={30} style={styles.Icon} />
-            </View>
-        </View>
-    )
-}
 
 
 const MainSearchScreenComp = ({ album }) => {
@@ -31,31 +14,27 @@ const MainSearchScreenComp = ({ album }) => {
     const [type, setType] = useState('track')
     const [value, setValue] = useState('')
     const navigation = useNavigation();
+
     //-------------- ONPRESS FUNCTIONS FOR SWIPE TOGGLE ---------------
     const OnSongsPressed = () => { setType('track') }
     const OnPlaylistsPressed = () => { setType('playlist') }
     const OnAlbumsPressed = () => { setType('album') }
     const OnArtistPressed = () => { setType('artist') }
     const OnPodcastShowsPressed = () => { setType('show') }
-    const OnProfilesPressed = () => { setType(album) }
-    const OnGenreMoodsPrssed = () => { setType(album) }
 
 
     //------------- APICALL FUNCTION ----------------
 
     const AccessToken = useSelector((state) => state.AccessToken.token)
-
     useEffect(() => {
         dispatch(MainSearchAsyncThunk({ AccessToken, value, type }))
     }, [value])
 
-    const [response, setResponse] = useState('')
+    const [response, setResponse] = useState([])
     const mainMusicData = useSelector((state) => state.SearchReducer.MainSearch)
 
 
     // ----------- CONDITIONAL RESULT COMPONENT ----------
-
-
     useEffect(() => {
         if (mainMusicData.albums) {
             console.log("albumData", mainMusicData.albums)
@@ -80,16 +59,17 @@ const MainSearchScreenComp = ({ album }) => {
             console.log('not working')
         )
     })
+
     const RenderItemFunction = ({ item }) => {
         if (mainMusicData.albums == response) {
             return <AlbumsComps image={item.images[0] && item.images[0].url ? item.images[0].url : null} albumName={item.name} singerOne={item.artists[0].name} singerTwo={item.artists[1] && item.artists[1] ? item.artists[1].name : null} singerThree={item.artists[2] && item.artists[2] ? item.artists[2].name : null} albumType={item.album_type} releaseYear={item.release_date}
                 onAlbumCompPressed={() => {
                     console.warn('album comp pressed')
-                    navigation.navigate('AlbumSearchResult', { Images: item.images[0].url, AlbumName: item.name, ArtistName: item.artists[0].name, AlbumId: item.id, TypeGenre: item })
+                    navigation.navigate('AlbumSearchResult', { Images: item.images[0].url, AlbumName: item.name, ArtistName: item.artists[0].name, AlbumId: item.id, TypeGenre: item, ReleaseDate: item.release_date, TotalTracks: item.total_tracks, Artist: item.artists })
                 }}
             />
         } else if (mainMusicData.tracks == response) {
-            return <SearchComps image={item.album.images[0].url} trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1].name ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2].name ? item.artists[2].name : null} />
+            return <TrackComp image={item.album.images[0].url} trackName={item.name} Artist={item.artists[0].name} ArtistTwo={item.artists[1] && item.artists[1].name ? item.artists[1].name : null} ArtistThree={item.artists[2] && item.artists[2].name ? item.artists[2].name : null} />
         }
         else if (response == mainMusicData.playlists) {
             return <PlaylistComp image={item.images[0] && item.images[0].url ? item.images[0].url : item.images[0].url} playlistName={item.name}
@@ -112,26 +92,21 @@ const MainSearchScreenComp = ({ album }) => {
 
 
     return (
-        <View>
+
+        <ScrollView>
             <SearchBarComp
                 value={value}
                 onChangeText={(e) => { setValue(e) }}
                 onSubmitEditing={(e) => setValue(e)}
             />
             <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
-
             <FlatList
                 data={response.items}
                 numColumns={2}
-                key={'_'}
-                keyExtractor={item => "_" + item.id}
                 renderItem={RenderItemFunction}
             />
+        </ScrollView>
 
-
-
-
-        </View>
     )
 }
 

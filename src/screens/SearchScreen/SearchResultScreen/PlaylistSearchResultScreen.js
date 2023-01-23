@@ -4,7 +4,7 @@ import PlaylistSearchResultComp from '../../../components/SearchScreenComp/Searc
 
 const PlaylistSearchResultScreen = () => {
   return (
-    <View>
+    <View style={styles.root}>
           <PlaylistSearchResultComp />  
     </View>
   )
@@ -12,4 +12,8 @@ const PlaylistSearchResultScreen = () => {
 
 export default PlaylistSearchResultScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  root:{
+    flex:1
+  }
+})
