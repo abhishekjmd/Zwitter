@@ -28,7 +28,6 @@ const RecentlyPlaylistPlayed = () => {
     }, [dispatch])
 
     const RecentlyPlayedData = useSelector((state) => state.homeReducer.RecentlyPlayed)
-
     return (
         <View style={styles.main}>
             <FlatList

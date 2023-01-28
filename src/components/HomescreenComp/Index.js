@@ -1,16 +1,35 @@
-import { StyleSheet, View, ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, ScrollView, RefreshControl } from 'react-native'
+import React, { useState } from 'react'
 import TopBar from './TopBar'
 import BiggestHits from './BiggestHits'
 import FavouriteArtist from './FavouriteArtist'
 import RecentlyPlaylistPlayed from './RecentlyPlaylistPlayed'
 import NewReleases from './NewReleases'
 import RecentlyPlayed from './RecentlyPlayed'
+import { BigHitsPlaylistAsync, FavouriteArtistAsync, NewReleasesPlaylistAsync, RecentlyPlayedPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
+import { useDispatch, useSelector } from 'react-redux'
 const Index = () => {
+   const dispatch = useDispatch();
+   
+    const [refreshing, setRefreshing] = useState(false)
+    const AccessToken = useSelector((state) => state.AccessToken.token)
+    const onRefresh = async () => {
+        setRefreshing(true);
+        dispatch(BigHitsPlaylistAsync(AccessToken));
+        dispatch(FavouriteArtistAsync(AccessToken));
+        dispatch(NewReleasesPlaylistAsync(AccessToken));
+        dispatch(RecentlyPlayedPlaylistAsync(AccessToken));
+        setRefreshing(false)
+    }
 
     return (
         <View style={styles.root}>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <TopBar />
                 <RecentlyPlaylistPlayed />
                 <BiggestHits />

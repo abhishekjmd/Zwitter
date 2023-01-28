@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable, FlatList, RefreshControl } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BigHitsPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
+import { BigHitsPlaylistAsync, FavouriteArtistAsync, NewReleasesPlaylistAsync, RecentlyPlayedPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 import { PlaylistComp } from '../SearchScreenComp/MainSearchScreenComp/SubSearchComps'
 import { useNavigation } from '@react-navigation/native'
 const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
@@ -21,7 +21,16 @@ const BiggestHits = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const AccessToken = useSelector((state) => state.AccessToken.token)
-    
+    const [refreshing, setRefreshing] = useState(false)
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        dispatch(BigHitsPlaylistAsync());
+        dispatch(FavouriteArtistAsync());
+        dispatch(NewReleasesPlaylistAsync());
+        dispatch(RecentlyPlayedPlaylistAsync());
+        setRefreshing(false)
+    }
 
     useEffect(() => {
         dispatch(BigHitsPlaylistAsync(AccessToken))
@@ -49,7 +58,7 @@ const BiggestHits = () => {
                     )
                 }}
             />
-        
+
         </View>
     )
 }

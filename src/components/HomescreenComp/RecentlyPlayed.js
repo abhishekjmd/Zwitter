@@ -26,7 +26,6 @@ const RecentlyPlayed = () => {
 
   const RecentlyPlayedData = useSelector((state) => state.homeReducer.RecentlyPlayed)
 
-  
   return (
     <View>
       <View style={styles.RecentlyPlayedContainer}>
