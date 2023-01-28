@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native'
+import { StyleSheet, Text, View,  } from 'react-native'
 import React from 'react'
 import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'

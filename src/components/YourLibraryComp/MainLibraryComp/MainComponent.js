@@ -29,13 +29,12 @@ const MainRenderComponent = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
 
-  
   const AccessToken = useSelector((state) => state.AccessToken.token)
-  
+
   const dispatchFunction = useCallback(() => {
     dispatch(MainLibraryAsync(AccessToken))
   }, [dispatch])
-  
+
   useEffect(() => {
     dispatchFunction()
   }, [dispatchFunction])
@@ -51,7 +50,7 @@ const MainRenderComponent = () => {
               <MainCreateComponent
                 PlaylistName={item.name}
                 Owner={item.owner.display_name}
-                image={item.images[0].url}
+                image={item.images && item.images ? item.images[0].url : null}
                 OnPlaylistPressed={() => {
                   console.warn(item.id)
                   navigation.navigate('MusicList', { TracksId: item.id, Owner: item.owner.display_name, Images: item.images[0].url, PlaylistName: item.name, OwnerImage: item.owner.uri })

@@ -5,12 +5,12 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-const SmallPlayer = ({ pause, OnPlay, OnPause, MusicImg,MusicName,SingerName }) => {
+export const SmallPlayer = ({ pause, OnPlay, OnPause, MusicImg, MusicName, SingerName }) => {
     return (
         <View style={styles.root}>
             <View style={styles.MainContainer}>
                 <View style={styles.ImageContainer}>
-                    <Image source={{ uri: MusicImg }} style={styles.Image} />
+                    <Image source={{ uri: MusicImg }} style={styles.Image} resizeMode='center' />
                 </View>
                 <View style={styles.TextContainer}>
                     <Text style={styles.FirstText}> {MusicName} </Text>
@@ -40,11 +40,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 5,
         width: '95%',
-        height: 60,
-        marginBottom: '18%',
+        height: 80,
         alignItems: 'center',
         marginLeft: 10,
-
+        position: 'absolute',
+        top: '85%',
+        left: 0,
+        right: 0,
+        bottom: 0
+        // bottom:10
+        // b:'50%'
     },
     MainContainer: {
         alignItems: 'center',
@@ -54,8 +59,8 @@ const styles = StyleSheet.create({
         width: '60%',
     },
     ImageContainer: {
-        height: '100%',
-        width: '20%',
+        height: '70%',
+        width: '25%',
     },
     Image: {
         height: '100%',
@@ -65,11 +70,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: '3%',
         height: '100%',
+        width: '80%',
+        justifyContent: 'center'
+
     },
     FirstText: {
         fontWeight: '600',
         color: 'white',
-        fontSize: 16,
+        fontSize: 15,
     },
     SecondText: {
         color: 'white'

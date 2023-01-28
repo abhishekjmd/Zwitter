@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
+import { StyleSheet, Text, View, Image, Pressable, FlatList, RefreshControl } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BigHitsPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
 import { PlaylistComp } from '../SearchScreenComp/MainSearchScreenComp/SubSearchComps'
+import { useNavigation } from '@react-navigation/native'
 const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
         <Pressable style={styles.PlaylistMainContainer} onPress={onPlaylistCompPressed} >
@@ -18,6 +19,7 @@ const BiggestHitsComp = ({ onPlaylistCompPressed, image, playlistName }) => {
 
 const BiggestHits = () => {
     const dispatch = useDispatch();
+    const navigation = useNavigation();
     const AccessToken = useSelector((state) => state.AccessToken.token)
     const dataDispatchFunction = useCallback(() => {
         dispatch(BigHitsPlaylistAsync(AccessToken))
@@ -27,26 +29,29 @@ const BiggestHits = () => {
         dataDispatchFunction()
     }, [])
     const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
-    
+
     return (
         <View style={{ backgroundColor: 'black' }}>
             <View style={styles.biggesthitsContainer}>
                 <Text style={styles.biggesthitsText}> Today's biggest hits</Text>
             </View>
-
             <FlatList
                 horizontal
                 data={BigHitsData}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return (
-                        <View>   
-                        <BiggestHitsComp image={item.images[0].url} playlistName={item.name} />
+                        <View>
+                            <BiggestHitsComp image={item.images[0].url} playlistName={item.name}
+                                onPlaylistCompPressed={() => {
+                                    navigation.navigate('PlaylistSearchResult', { Id: item.id, Images: item.images[0].url, PlayListName: item.name, OwnerName: item.owner.display_name, })
+                                }}
+                            />
                         </View>
                     )
                 }}
             />
-
+        
         </View>
     )
 }

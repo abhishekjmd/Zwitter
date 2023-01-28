@@ -5,7 +5,7 @@ const MusicList = ({ SongName, Artists, Images, OnMusicPressed, onSongPressed })
   
   return (
     <Pressable style={styles.root} onPress={OnMusicPressed}>
-      <TouchableOpacity style={styles.MainContainer} onPress={onSongPressed}>
+      <View style={styles.MainContainer}>
         <View style={styles.ImageContainer}>
           <Image source={{uri:Images}} style={styles.Image} />
         </View>
@@ -20,7 +20,7 @@ const MusicList = ({ SongName, Artists, Images, OnMusicPressed, onSongPressed })
             </View>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </Pressable>
   )
 }

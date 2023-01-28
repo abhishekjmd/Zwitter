@@ -81,7 +81,7 @@ const AlbumSearchResultComp = () => {
   }, [])
   return (
     <ScrollView style={styles.root}>
-      <MusicListTopComponents Images={coverImage} PlaylistName={CoverName && CoverName.length > 60 ? CoverName.slice(0, 60) + '...' : CoverName} Creator={ArtistName} WillWork />
+      <MusicListTopComponents Images={coverImage} PlaylistName={CoverName && CoverName.length > 60 ? CoverName.slice(0, 60) + '...' : CoverName} Creator={ArtistName}  />
       <FlatList
         data={response.items}
         style={{ marginTop: 20 }}

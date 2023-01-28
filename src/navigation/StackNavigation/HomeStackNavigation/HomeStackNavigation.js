@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../../../screens/HomeScreen/HomeScreen';
 import SplashScreen from '../../../screens/HomeScreen/SplashScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import PlaylistSearchResultScreen from '../../../screens/SearchScreen/SearchResultScreen/PlaylistSearchResultScreen';
 const Stack = createNativeStackNavigator();
+
 const Navigation = () => {
     const [showSplashScreen, setShowSplashScreen] = useState(true)
     useEffect(() => {
@@ -20,7 +22,9 @@ const Navigation = () => {
                 null
             }
             <Stack.Screen name='home' component={HomeScreen} />
-        </Stack.Navigator>
+            <Stack.Screen name='PlaylistSearchResult' component={PlaylistSearchResultScreen} />
+
+            </Stack.Navigator>
     )
 }
 

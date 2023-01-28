@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Pressable, FlatList, Image } from 'react-native
 import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NewReleasesPlaylistAsync } from '../../Redux/Reducers/HomeScreenSlice'
+import { useNavigation } from '@react-navigation/native'
 
 const NewReleasesComp = ({ onPlaylistCompPressed, image, playlistName }) => {
     return (
@@ -18,9 +19,10 @@ const NewReleasesComp = ({ onPlaylistCompPressed, image, playlistName }) => {
 }
 const NewReleases = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
 
-   
+
     const AccessToken = useSelector((state) => state.AccessToken.token)
     const dispatchFunction = useCallback(() => {
         dispatch(NewReleasesPlaylistAsync(AccessToken))
@@ -41,11 +43,10 @@ const NewReleases = () => {
                 data={newReleaseData}
                 renderItem={({ item }) => {
                     return (
-                        <NewReleasesComp image={item.images[0].url} playlistName={item.name} />
+                        <NewReleasesComp image={item.images[0].url} playlistName={item.name}   />
                     )
                 }}
             />
-
         </View>
     )
 }
