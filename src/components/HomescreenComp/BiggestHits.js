@@ -21,13 +21,11 @@ const BiggestHits = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const AccessToken = useSelector((state) => state.AccessToken.token)
-    const dataDispatchFunction = useCallback(() => {
-        dispatch(BigHitsPlaylistAsync(AccessToken))
-    }, [dispatch])
+    
 
     useEffect(() => {
-        dataDispatchFunction()
-    }, [])
+        dispatch(BigHitsPlaylistAsync(AccessToken))
+    }, [dispatch])
     const BigHitsData = useSelector((state) => state.homeReducer.BigHits)
 
     return (

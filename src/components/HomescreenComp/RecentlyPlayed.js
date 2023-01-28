@@ -20,14 +20,9 @@ const RecentlyPlayed = () => {
   
   const dispatch = useDispatch();
   const AccessToken = useSelector((state) => state.AccessToken.token)
-
-  const dispatchFunction = useCallback(() => {
+  useEffect(() => {
     dispatch(RecentlyPlayedPlaylistAsync(AccessToken))
   }, [dispatch])
-
-  useEffect(() => {
-    dispatchFunction()
-  }, [dispatchFunction])
 
   const RecentlyPlayedData = useSelector((state) => state.homeReducer.RecentlyPlayed)
 

@@ -24,13 +24,9 @@ const NewReleases = () => {
 
 
     const AccessToken = useSelector((state) => state.AccessToken.token)
-    const dispatchFunction = useCallback(() => {
+    useEffect(() => {
         dispatch(NewReleasesPlaylistAsync(AccessToken))
     }, [dispatch])
-
-    useEffect(() => {
-        dispatchFunction()
-    }, [dispatchFunction])
 
     const newReleaseData = useSelector((state) => state.homeReducer.NewReleases)
     return (
@@ -43,7 +39,7 @@ const NewReleases = () => {
                 data={newReleaseData}
                 renderItem={({ item }) => {
                     return (
-                        <NewReleasesComp image={item.images[0].url} playlistName={item.name}   />
+                        <NewReleasesComp image={item.images[0].url} playlistName={item.name} />
                     )
                 }}
             />

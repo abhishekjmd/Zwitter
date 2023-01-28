@@ -20,13 +20,9 @@ const FavouriteArtist = () => {
     dispatch = useDispatch();
     const AccessToken = useSelector((state) => state.AccessToken.token)
 
-    const dispatchFunction = useCallback(() => {
+    useEffect(() => {
         dispatch(FavouriteArtistAsync(AccessToken))
     }, [dispatch])
-
-    useEffect(() => {
-        dispatchFunction()
-    }, [dispatchFunction])
 
     const favouriteArtistData = useSelector((state) => state.homeReducer.FavouriteArtist)
     return (
