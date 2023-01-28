@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, View, FlatList, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
@@ -14,7 +14,7 @@ const PlaylistSearchResultComp = () => {
   const [smallPlayerImage, setSmallPlayerImage] = useState('')
   const [smallPlayerTrackName, setSmallPlayerTrackName] = useState('')
   const [smallPlayerSinger, setSmallPlayerSinger] = useState('')
-
+  const [showActivityIndicator, setShowActivityIndicator] = useState(true)
   const playlist_id = route.params.Id
   const CoverImage = route.params.Images
   const PlayListName = route.params.PlayListName
@@ -34,6 +34,7 @@ const PlaylistSearchResultComp = () => {
       const finalres = await result.tracks;
       console.log(finalres);
       setResponse(finalres);
+      setShowActivityIndicator(false)
     } catch (error) {
       console.log(error);
     }
@@ -47,31 +48,46 @@ const PlaylistSearchResultComp = () => {
     PlaylistApi()
   }, [])
   return (
-    <View style={{position:'relative',flex:1}}>
-      <ScrollView style={{ backgroundColor: 'black' }}>
-        <MusicListTopComponents Images={CoverImage} PlaylistName={PlayListName} Creator={CreatorName && CreatorName ? CreatorName : null} LikesCount={30} />
-        <FlatList
-          style={{ backgroundColor: 'black' }}
-          data={response.items}
-          renderItem={({ item }) => {
-            return (
-              <View>
-                <MusicList
-                  Images={item.track.album.images[0].url}
-                  SongName={item.track.name && item.track.name.length > 40 ? item.track.name.slice(0, 40) + '..' : item.track.name}
-                  Artists={item.track.artists[0].name}
-                  OnMusicPressed={() => { musicPresshandle(); setSmallPlayerImage(item.track.album.images[0].url); setSmallPlayerSinger(item.track.artists[0].name); setSmallPlayerTrackName(item.track.name.slice(0, 40) + '..') }} />
-              </View>
-            )
-          }}
-        />
-        
+    <View style={{ position: 'relative', flex: 1 }}>
+      {showActivityIndicator ?
+        <View style={styles.activityContainer}>
+          <ActivityIndicator size={50} color='#1DB954' style={styles.activityIndicatorStyle} />
+        </View>
+        :
+        <ScrollView style={{ backgroundColor: 'black' }}>
+          <MusicListTopComponents Images={CoverImage} PlaylistName={PlayListName} Creator={CreatorName && CreatorName ? CreatorName : null} LikesCount={30} />
+          <FlatList
+            style={{ backgroundColor: 'black' }}
+            data={response.items}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <MusicList
+                    Images={item.track.album.images && item.track.album.images ? item.track.album.images[0].url : null}
+                    SongName={item.track.name && item.track.name.length > 40 ? item.track.name.slice(0, 40) + '..' : item.track.name}
+                    Artists={item.track.artists[0].name}
+                    OnMusicPressed={() => { musicPresshandle(); setSmallPlayerImage(item.track.album.images[0].url); setSmallPlayerSinger(item.track.artists[0].name); setSmallPlayerTrackName(item.track.name.slice(0, 40) + '..') }} />
+                </View>
+              )
+            }}
+          />
+
         </ScrollView>
-        {modalOpen ? <SmallPlayer MusicImg={smallPlayerImage} MusicName={smallPlayerTrackName} SingerName={smallPlayerSinger} /> : null}
+      }
+  
+      {modalOpen ? <SmallPlayer MusicImg={smallPlayerImage} MusicName={smallPlayerTrackName} SingerName={smallPlayerSinger} /> : null}
     </View>
   )
 }
 
 export default PlaylistSearchResultComp
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  activityContainer:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: '#000000'
+  },
+})

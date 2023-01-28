@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, FlatList, ScrollView } from 'react-native'
+import { Text, View, FlatList, ScrollView, StyleSheet } from 'react-native'
 import SwipeComp from './SwipeComp'
 import { AlbumsComps, ArtistComp, PlaylistComp, SearchBarComp, TrackComp } from './SubSearchComps';
 import { useSelector } from 'react-redux'
@@ -14,7 +14,6 @@ const MainSearchScreenComp = ({ album }) => {
     const [type, setType] = useState('track')
     const [value, setValue] = useState('')
     const navigation = useNavigation();
-
     //-------------- ONPRESS FUNCTIONS FOR SWIPE TOGGLE ---------------
     const OnSongsPressed = () => { setType('track') }
     const OnPlaylistsPressed = () => { setType('playlist') }
@@ -28,6 +27,7 @@ const MainSearchScreenComp = ({ album }) => {
     const AccessToken = useSelector((state) => state.AccessToken.token)
     useEffect(() => {
         dispatch(MainSearchAsyncThunk({ AccessToken, value, type }))
+
     }, [value])
 
     const [response, setResponse] = useState([])
@@ -39,23 +39,32 @@ const MainSearchScreenComp = ({ album }) => {
         if (mainMusicData.albums) {
             console.log("albumData", mainMusicData.albums)
             setResponse(mainMusicData.albums)
-        } else if (mainMusicData.tracks) {
+                    } else if (mainMusicData.tracks) {
             console.log('trackData.tracks', mainMusicData.tracks)
             setResponse(mainMusicData.tracks)
+            
+
         }
         else if (mainMusicData.playlists) {
             console.log('trackData.playlists', mainMusicData.playlists)
             setResponse(mainMusicData.playlists)
+            
+
         }
         else if (mainMusicData.artists) {
             console.log('trackData.artists', mainMusicData.artists)
             setResponse(mainMusicData.artists)
+            
+
         }
         else if (mainMusicData.shows) {
             console.log('trackData.shows', mainMusicData.shows)
             setResponse(mainMusicData.shows)
+            
+
         }
         else (
+            
             console.log('not working')
         )
     })
@@ -90,24 +99,37 @@ const MainSearchScreenComp = ({ album }) => {
         }
     }
 
-
     return (
-
-        <ScrollView>
-            <SearchBarComp
-                value={value}
-                onChangeText={(e) => { setValue(e) }}
-                onSubmitEditing={(e) => setValue(e)}
-            />
-            <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
-            <FlatList
-                data={response.items}
-                numColumns={2}
-                renderItem={RenderItemFunction}
-            />
-        </ScrollView>
-
+        <View>
+            <ScrollView>
+                <SearchBarComp
+                    value={value}
+                    onChangeText={(e) => { setValue(e) }}
+                    onSubmitEditing={(e) => setValue(e)}
+                />
+                <SwipeComp AlbumsPressed={OnAlbumsPressed} SongsPressed={OnSongsPressed} PlaylistsPressed={OnPlaylistsPressed} ArtistsPressed={OnArtistPressed} PodcastsShowsPressed={OnPodcastShowsPressed} />
+                <FlatList
+                    data={response.items}
+                    numColumns={2}
+                    renderItem={RenderItemFunction}
+                />
+            </ScrollView>
+        </View>
     )
 }
 
 export default MainSearchScreenComp
+const styles = StyleSheet.create({
+    activityContainer: {
+        // flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        // position: 'absolute',
+        backgroundColor: '#000000',
+        // top: 0,
+        left: 0,
+        right: 0,
+        // bottom: 0,
+        // zIndex: 2
+    },
+})
